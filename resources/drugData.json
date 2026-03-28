@@ -1,0 +1,663 @@
+{
+  "drugs": [
+    {
+      "drugId": "D001",
+      "name": "warfarin",
+      "brandNames": ["Coumadin", "Jantoven"],
+      "category": "Anticoagulant",
+      "warnings": [
+        "Monitor INR regularly",
+        "Risk of serious and fatal bleeding",
+        "Avoid sudden changes in vitamin K intake"
+      ],
+      "interactions": [
+        { "drugId": "D002", "drugName": "aspirin",        "severity": "high",         "description": "Combined use significantly increases hemorrhage risk" },
+        { "drugId": "D003", "drugName": "ibuprofen",      "severity": "high",         "description": "NSAIDs potentiate anticoagulant effect and GI bleeding risk" },
+        { "drugId": "D010", "drugName": "sertraline",     "severity": "moderate",     "description": "SSRIs inhibit platelet aggregation, enhancing warfarin bleed risk" },
+        { "drugId": "D014", "drugName": "metronidazole",  "severity": "high",         "description": "CYP2C9 inhibition substantially raises warfarin plasma levels and INR" },
+        { "drugId": "D015", "drugName": "clarithromycin", "severity": "high",         "description": "CYP3A4 and CYP2C9 inhibition markedly increases warfarin effect" },
+        { "drugId": "D019", "drugName": "clopidogrel",    "severity": "high",         "description": "Dual anticoagulant + antiplatelet use greatly increases hemorrhage risk" },
+        { "drugId": "D021", "drugName": "allopurinol",    "severity": "moderate",     "description": "Allopurinol inhibits warfarin metabolism; increased anticoagulant effect" },
+        { "drugId": "D023", "drugName": "naproxen",       "severity": "high",         "description": "NSAIDs potentiate warfarin; increased risk of serious GI bleeding" }
+      ],
+      "allergyConflicts": [],
+      "conditionConflicts": [
+        { "condition": "peptic ulcer disease",     "severity": "contraindicated", "description": "High hemorrhage risk in patients with active GI ulcers" },
+        { "condition": "uncontrolled hypertension","severity": "high",            "description": "Elevated BP increases hemorrhagic stroke risk on anticoagulation" },
+        { "condition": "liver disease",            "severity": "high",            "description": "Impaired clotting factor synthesis leads to unpredictable anticoagulation" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol",             "severity": "high",     "description": "Acute alcohol use inhibits warfarin metabolism; chronic use induces it — both alter INR unpredictably" },
+        { "item": "grapefruit",          "severity": "moderate", "description": "CYP3A4 inhibition may modestly elevate warfarin levels" },
+        { "item": "high vitamin K foods","severity": "high",     "description": "Leafy greens antagonize warfarin; must maintain consistent vitamin K intake" }
+      ]
+    },
+    {
+      "drugId": "D002",
+      "name": "aspirin",
+      "brandNames": ["Bayer", "Ecotrin", "Bufferin"],
+      "category": "NSAID / Antiplatelet",
+      "warnings": [
+        "Risk of GI bleeding and ulceration",
+        "Avoid in children under 18 with viral illness — Reye's syndrome risk",
+        "Discontinue 7–10 days before elective surgery"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",    "severity": "high",     "description": "Combined use significantly increases bleeding risk" },
+        { "drugId": "D003", "drugName": "ibuprofen",   "severity": "moderate", "description": "Ibuprofen competitively inhibits COX-1, diminishing aspirin's cardioprotective effect" },
+        { "drugId": "D007", "drugName": "lisinopril",  "severity": "moderate", "description": "NSAIDs may attenuate antihypertensive efficacy of ACE inhibitors" },
+        { "drugId": "D017", "drugName": "lithium",     "severity": "moderate", "description": "NSAIDs reduce renal lithium clearance, increasing serum levels" },
+        { "drugId": "D019", "drugName": "clopidogrel", "severity": "high",     "description": "Dual antiplatelet therapy significantly increases major bleeding events" },
+        { "drugId": "D022", "drugName": "glipizide",   "severity": "moderate", "description": "High-dose aspirin may potentiate hypoglycemic effect of sulfonylureas" }
+      ],
+      "allergyConflicts": ["aspirin", "salicylates", "NSAIDs"],
+      "conditionConflicts": [
+        { "condition": "peptic ulcer disease", "severity": "contraindicated", "description": "Worsens GI ulceration and bleeding" },
+        { "condition": "bleeding disorder",    "severity": "contraindicated", "description": "Irreversible platelet inhibition worsens hemorrhagic bleeding disorders" },
+        { "condition": "renal failure",        "severity": "high",            "description": "Reduces prostaglandin-mediated renal perfusion, worsening kidney function" },
+        { "condition": "asthma",               "severity": "high",            "description": "Aspirin-exacerbated respiratory disease (AERD) can cause fatal bronchospasm" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "high", "description": "Alcohol combined with aspirin markedly increases GI bleeding risk" }
+      ]
+    },
+    {
+      "drugId": "D003",
+      "name": "ibuprofen",
+      "brandNames": ["Advil", "Motrin", "Nuprin"],
+      "category": "NSAID",
+      "warnings": [
+        "Risk of serious cardiovascular thrombotic events with prolonged use",
+        "Risk of GI ulceration, bleeding, and perforation",
+        "Use the lowest effective dose for the shortest duration"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "high",     "description": "Increases anticoagulant effect and GI bleeding risk" },
+        { "drugId": "D002", "drugName": "aspirin",    "severity": "moderate", "description": "Competitive COX-1 inhibition reduces aspirin's cardioprotective antiplatelet effect" },
+        { "drugId": "D007", "drugName": "lisinopril", "severity": "moderate", "description": "Reduces antihypertensive efficacy; increases risk of acute kidney injury" },
+        { "drugId": "D017", "drugName": "lithium",    "severity": "high",     "description": "Reduces renal lithium clearance, causing significant toxicity" },
+        { "drugId": "D024", "drugName": "furosemide", "severity": "moderate", "description": "NSAIDs blunt diuretic response and further impair renal function" }
+      ],
+      "allergyConflicts": ["NSAIDs", "aspirin", "salicylates"],
+      "conditionConflicts": [
+        { "condition": "peptic ulcer disease", "severity": "contraindicated", "description": "NSAIDs inhibit gastroprotective prostaglandins, worsening ulceration" },
+        { "condition": "heart failure",        "severity": "high",            "description": "Sodium and water retention worsens fluid overload in heart failure" },
+        { "condition": "renal failure",        "severity": "high",            "description": "Further reduces GFR; can precipitate acute kidney injury" },
+        { "condition": "asthma",               "severity": "moderate",        "description": "May trigger bronchospasm in NSAID-sensitive asthmatic patients" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "high", "description": "Increases risk of GI ulceration and bleeding" }
+      ]
+    },
+    {
+      "drugId": "D004",
+      "name": "amoxicillin",
+      "brandNames": ["Amoxil", "Trimox", "Moxatag"],
+      "category": "Penicillin Antibiotic",
+      "warnings": [
+        "Discontinue immediately if allergic reaction or anaphylaxis occurs",
+        "May cause antibiotic-associated diarrhea or C. difficile colitis",
+        "Complete the full prescribed course of therapy"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "moderate", "description": "Antibiotics alter gut flora affecting vitamin K synthesis, unpredictably changing INR" },
+        { "drugId": "D021", "drugName": "allopurinol","severity": "moderate", "description": "Concurrent use increases incidence of ampicillin/amoxicillin skin rash" },
+        { "drugId": "D022", "drugName": "glipizide",  "severity": "low",      "description": "Rare reports of altered glucose control; monitor during antibiotic course" }
+      ],
+      "allergyConflicts": ["penicillin", "cephalosporins", "beta-lactams", "amoxicillin"],
+      "conditionConflicts": [
+        { "condition": "mononucleosis",  "severity": "high",     "description": "Amoxicillin causes a widespread maculopapular rash in nearly all EBV-mononucleosis patients" },
+        { "condition": "renal failure",  "severity": "moderate", "description": "Dose reduction required in severe renal impairment (CrCl < 30 mL/min)" }
+      ],
+      "dietaryConflicts": []
+    },
+    {
+      "drugId": "D005",
+      "name": "ciprofloxacin",
+      "brandNames": ["Cipro", "Proquin XR"],
+      "category": "Fluoroquinolone Antibiotic",
+      "warnings": [
+        "Risk of tendon rupture and tendinitis, especially with concurrent corticosteroid use",
+        "May prolong QT interval — avoid in patients with QT disorders",
+        "Avoid in patients under 18 except for specific indications",
+        "Photosensitivity — avoid prolonged sun exposure"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "high",     "description": "Inhibits CYP1A2, significantly raising warfarin plasma levels and bleeding risk" },
+        { "drugId": "D016", "drugName": "digoxin",    "severity": "moderate", "description": "Alters gut flora increasing digoxin absorption and serum levels" },
+        { "drugId": "D025", "drugName": "clonazepam", "severity": "low",      "description": "Mild CYP3A4 inhibition may modestly increase benzodiazepine levels" }
+      ],
+      "allergyConflicts": ["fluoroquinolones", "quinolones"],
+      "conditionConflicts": [
+        { "condition": "QT prolongation",  "severity": "contraindicated", "description": "Ciprofloxacin prolongs QT, risking life-threatening torsades de pointes" },
+        { "condition": "tendon disorder",  "severity": "high",            "description": "Fluoroquinolones increase tendon rupture risk, especially Achilles tendon" },
+        { "condition": "epilepsy",         "severity": "moderate",        "description": "Lowers seizure threshold by inhibiting GABA-A receptor binding" }
+      ],
+      "dietaryConflicts": [
+        { "item": "dairy products", "severity": "moderate", "description": "Calcium chelates ciprofloxacin, significantly reducing oral absorption — take 2h apart" },
+        { "item": "caffeine",       "severity": "moderate", "description": "CYP1A2 inhibition drastically reduces caffeine clearance, causing caffeine toxicity symptoms" }
+      ]
+    },
+    {
+      "drugId": "D006",
+      "name": "metformin",
+      "brandNames": ["Glucophage", "Fortamet", "Riomet"],
+      "category": "Biguanide Antidiabetic",
+      "warnings": [
+        "Hold 48 hours before and after iodinated contrast procedures — risk of lactic acidosis",
+        "Monitor renal function (eGFR) at baseline and periodically",
+        "Long-term use associated with vitamin B12 deficiency"
+      ],
+      "interactions": [
+        { "drugId": "D020", "drugName": "prednisone", "severity": "high",     "description": "Corticosteroids cause steroid-induced hyperglycemia, opposing metformin effect" },
+        { "drugId": "D022", "drugName": "glipizide",  "severity": "moderate", "description": "Additive hypoglycemic effect; monitor blood glucose closely" }
+      ],
+      "allergyConflicts": [],
+      "conditionConflicts": [
+        { "condition": "renal failure",  "severity": "contraindicated", "description": "Accumulates in renal failure causing potentially fatal lactic acidosis" },
+        { "condition": "liver disease",  "severity": "contraindicated", "description": "Impaired lactate clearance greatly increases lactic acidosis risk" },
+        { "condition": "heart failure",  "severity": "high",            "description": "Reduced tissue perfusion in decompensated HF increases lactic acidosis risk" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "high", "description": "Alcohol potentiates lactic acidosis risk and causes erratic glycemic control" }
+      ]
+    },
+    {
+      "drugId": "D007",
+      "name": "lisinopril",
+      "brandNames": ["Zestril", "Prinivil", "Qbrelis"],
+      "category": "ACE Inhibitor",
+      "warnings": [
+        "Risk of angioedema — discontinue immediately if tongue/airway swelling occurs",
+        "Monitor serum potassium; can cause life-threatening hyperkalemia",
+        "Absolute contraindication in all trimesters of pregnancy"
+      ],
+      "interactions": [
+        { "drugId": "D002", "drugName": "aspirin",   "severity": "moderate", "description": "High-dose aspirin may reduce ACE inhibitor antihypertensive efficacy" },
+        { "drugId": "D003", "drugName": "ibuprofen", "severity": "moderate", "description": "NSAIDs reduce efficacy and increase risk of acute kidney injury" },
+        { "drugId": "D017", "drugName": "lithium",   "severity": "high",     "description": "ACE inhibitors reduce renal lithium excretion, causing lithium toxicity" },
+        { "drugId": "D024", "drugName": "furosemide","severity": "moderate", "description": "Risk of severe first-dose hypotension; volume depletion increases AKI risk" }
+      ],
+      "allergyConflicts": ["ACE inhibitors", "lisinopril"],
+      "conditionConflicts": [
+        { "condition": "bilateral renal artery stenosis", "severity": "contraindicated", "description": "Can precipitate acute renal failure by removing efferent arteriole tone" },
+        { "condition": "hyperkalemia",                    "severity": "contraindicated", "description": "ACE inhibitors further elevate serum potassium levels" },
+        { "condition": "pregnancy",                       "severity": "contraindicated", "description": "Causes fetal renal dysgenesis, oligohydramnios, and fetal death" },
+        { "condition": "angioedema history",              "severity": "contraindicated", "description": "Prior ACE inhibitor-induced angioedema is an absolute contraindication" }
+      ],
+      "dietaryConflicts": [
+        { "item": "high potassium foods","severity": "moderate", "description": "ACE inhibitors already raise potassium; excess dietary potassium can cause dangerous hyperkalemia" },
+        { "item": "salt substitutes",    "severity": "moderate", "description": "Salt substitutes contain KCl; combined with ACE inhibitor can cause severe hyperkalemia" }
+      ]
+    },
+    {
+      "drugId": "D008",
+      "name": "metoprolol",
+      "brandNames": ["Lopressor", "Toprol XL"],
+      "category": "Beta-1 Selective Beta-Blocker",
+      "warnings": [
+        "Never abruptly discontinue — taper dose over 1–2 weeks to prevent rebound ischemia",
+        "Masks tachycardia as a warning sign of hypoglycemia in diabetic patients",
+        "Use with extreme caution in bronchospastic disease"
+      ],
+      "interactions": [
+        { "drugId": "D010", "drugName": "sertraline", "severity": "moderate", "description": "Sertraline inhibits CYP2D6, increasing metoprolol plasma levels causing bradycardia" },
+        { "drugId": "D013", "drugName": "amlodipine", "severity": "moderate", "description": "Additive antihypertensive and negative chronotropic effect; monitor heart rate" },
+        { "drugId": "D016", "drugName": "digoxin",    "severity": "moderate", "description": "Additive AV nodal depression and bradycardia risk" },
+        { "drugId": "D018", "drugName": "fluoxetine", "severity": "moderate", "description": "CYP2D6 inhibition by fluoxetine increases metoprolol levels" }
+      ],
+      "allergyConflicts": ["beta-blockers", "metoprolol"],
+      "conditionConflicts": [
+        { "condition": "asthma",                          "severity": "high",            "description": "Even cardioselective beta-blockers can trigger bronchoconstriction in asthmatics" },
+        { "condition": "bradycardia",                     "severity": "contraindicated", "description": "Further slows heart rate; risk of symptomatic bradycardia and syncope" },
+        { "condition": "cardiogenic shock",               "severity": "contraindicated", "description": "Negative inotropy worsens cardiogenic shock" },
+        { "condition": "second or third degree AV block", "severity": "contraindicated", "description": "Worsens conduction block; may cause complete heart block" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "moderate", "description": "Additive blood pressure lowering; increased dizziness and syncope risk" }
+      ]
+    },
+    {
+      "drugId": "D009",
+      "name": "simvastatin",
+      "brandNames": ["Zocor", "FloLipid"],
+      "category": "Statin (HMG-CoA Reductase Inhibitor)",
+      "warnings": [
+        "Risk of myopathy and rhabdomyolysis — especially with CYP3A4 inhibitors",
+        "Monitor liver function tests before initiation and as clinically indicated",
+        "Avoid the 80mg dose except in patients already tolerating it for 12+ months"
+      ],
+      "interactions": [
+        { "drugId": "D013", "drugName": "amlodipine",     "severity": "moderate",        "description": "Amlodipine mildly inhibits CYP3A4; cap simvastatin at 20mg" },
+        { "drugId": "D015", "drugName": "clarithromycin", "severity": "contraindicated", "description": "Strong CYP3A4 inhibition dramatically raises simvastatin levels; severe myopathy/rhabdomyolysis risk" },
+        { "drugId": "D020", "drugName": "prednisone",     "severity": "moderate",        "description": "Corticosteroids worsen hyperlipidemia; may require statin dose adjustment" }
+      ],
+      "allergyConflicts": ["statins"],
+      "conditionConflicts": [
+        { "condition": "liver disease",    "severity": "contraindicated", "description": "Active liver disease or unexplained persistent transaminase elevation is an absolute contraindication" },
+        { "condition": "myopathy",         "severity": "contraindicated", "description": "Pre-existing myopathy or CK elevation is a contraindication" },
+        { "condition": "hypothyroidism",   "severity": "high",            "description": "Untreated hypothyroidism significantly increases statin-induced myopathy risk" }
+      ],
+      "dietaryConflicts": [
+        { "item": "grapefruit", "severity": "high",     "description": "Grapefruit inhibits intestinal CYP3A4, dramatically increasing simvastatin bioavailability and myopathy risk" },
+        { "item": "alcohol",    "severity": "moderate", "description": "Concurrent alcohol use increases hepatotoxicity risk" }
+      ]
+    },
+    {
+      "drugId": "D010",
+      "name": "sertraline",
+      "brandNames": ["Zoloft"],
+      "category": "Selective Serotonin Reuptake Inhibitor (SSRI)",
+      "warnings": [
+        "Black box warning: increased suicidal ideation in children, adolescents, and young adults under 25",
+        "Risk of serotonin syndrome when combined with other serotonergic agents",
+        "Taper dose over several weeks when discontinuing to avoid discontinuation syndrome"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "moderate", "description": "SSRIs inhibit platelet serotonin uptake, increasing bleeding risk with anticoagulants" },
+        { "drugId": "D008", "drugName": "metoprolol", "severity": "moderate", "description": "CYP2D6 inhibition increases metoprolol levels causing bradycardia" },
+        { "drugId": "D018", "drugName": "fluoxetine", "severity": "high",     "description": "Combining two SSRIs markedly increases serotonin syndrome risk" },
+        { "drugId": "D025", "drugName": "clonazepam", "severity": "moderate", "description": "Additive CNS depressant effect; increased sedation and cognitive impairment" }
+      ],
+      "allergyConflicts": ["SSRIs", "sertraline"],
+      "conditionConflicts": [
+        { "condition": "bipolar disorder",  "severity": "high",     "description": "Antidepressants can trigger manic/hypomanic episodes without concurrent mood stabilizer" },
+        { "condition": "seizure disorder",  "severity": "moderate", "description": "SSRIs may lower seizure threshold" },
+        { "condition": "bleeding disorder", "severity": "high",     "description": "SSRIs impair platelet function, worsening bleeding in coagulation disorders" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol",    "severity": "high",     "description": "Potentiates CNS depression, significantly impairing psychomotor function" },
+        { "item": "grapefruit", "severity": "moderate", "description": "CYP3A4 inhibition may modestly increase sertraline plasma levels" }
+      ]
+    },
+    {
+      "drugId": "D011",
+      "name": "omeprazole",
+      "brandNames": ["Prilosec", "Zegerid"],
+      "category": "Proton Pump Inhibitor (PPI)",
+      "warnings": [
+        "Long-term use associated with hypomagnesemia, vitamin B12 deficiency, and bone fractures",
+        "May increase risk of Clostridioides difficile infection",
+        "Use the lowest effective dose for the shortest duration clinically appropriate"
+      ],
+      "interactions": [
+        { "drugId": "D012", "drugName": "levothyroxine", "severity": "moderate", "description": "Raises gastric pH, reducing levothyroxine absorption by up to 30%" },
+        { "drugId": "D019", "drugName": "clopidogrel",   "severity": "high",     "description": "CYP2C19 inhibition reduces clopidogrel bioactivation, decreasing antiplatelet effect and increasing thrombotic risk" }
+      ],
+      "allergyConflicts": ["proton pump inhibitors", "omeprazole"],
+      "conditionConflicts": [
+        { "condition": "hypomagnesemia", "severity": "high",     "description": "Long-term PPI use further depletes serum magnesium" },
+        { "condition": "osteoporosis",   "severity": "moderate", "description": "Chronic PPI use associated with increased hip, wrist, and spine fracture risk" }
+      ],
+      "dietaryConflicts": []
+    },
+    {
+      "drugId": "D012",
+      "name": "levothyroxine",
+      "brandNames": ["Synthroid", "Levoxyl", "Tirosint"],
+      "category": "Thyroid Hormone Replacement",
+      "warnings": [
+        "Take on empty stomach 30–60 minutes before food for consistent absorption",
+        "Numerous food and drug interactions affect absorption — administer consistently",
+        "Requires periodic TSH and free T4 monitoring to titrate dose"
+      ],
+      "interactions": [
+        { "drugId": "D006", "drugName": "metformin",   "severity": "low",      "description": "Metformin may reduce TSH without clinically significant thyroid hormone effects" },
+        { "drugId": "D011", "drugName": "omeprazole",  "severity": "moderate", "description": "PPI-induced pH increase reduces levothyroxine dissolution and absorption" }
+      ],
+      "allergyConflicts": [],
+      "conditionConflicts": [
+        { "condition": "untreated adrenal insufficiency", "severity": "contraindicated", "description": "Thyroid hormone increases cortisol metabolism; adrenal crisis can be precipitated" },
+        { "condition": "acute myocardial infarction",     "severity": "high",            "description": "Increased metabolic demand and heart rate can worsen acute cardiac ischemia" }
+      ],
+      "dietaryConflicts": [
+        { "item": "soy products",        "severity": "high",     "description": "Soy isoflavones directly impair levothyroxine absorption; administer hours apart" },
+        { "item": "high fiber diet",     "severity": "moderate", "description": "Dietary fiber binds levothyroxine in GI tract, reducing absorption" },
+        { "item": "coffee",              "severity": "moderate", "description": "Coffee reduces levothyroxine absorption by up to 25%; wait 30–60 min after dosing" },
+        { "item": "calcium-rich foods",  "severity": "moderate", "description": "Calcium chelates levothyroxine; separate ingestion by at least 4 hours" }
+      ]
+    },
+    {
+      "drugId": "D013",
+      "name": "amlodipine",
+      "brandNames": ["Norvasc"],
+      "category": "Calcium Channel Blocker (Dihydropyridine)",
+      "warnings": [
+        "May cause dose-dependent peripheral edema",
+        "Avoid grapefruit juice — significantly increases plasma levels",
+        "Abrupt discontinuation in angina patients may cause rebound ischemia"
+      ],
+      "interactions": [
+        { "drugId": "D008", "drugName": "metoprolol",    "severity": "moderate", "description": "Additive heart rate and blood pressure lowering; monitor for symptomatic bradycardia" },
+        { "drugId": "D009", "drugName": "simvastatin",   "severity": "moderate", "description": "Amlodipine is a mild CYP3A4 inhibitor; cap simvastatin dose at 20mg" },
+        { "drugId": "D015", "drugName": "clarithromycin","severity": "high",     "description": "Strong CYP3A4 inhibition by clarithromycin significantly increases amlodipine plasma levels" }
+      ],
+      "allergyConflicts": ["calcium channel blockers", "dihydropyridines", "amlodipine"],
+      "conditionConflicts": [
+        { "condition": "cardiogenic shock",    "severity": "contraindicated", "description": "Vasodilation from calcium channel blockade worsens cardiogenic shock" },
+        { "condition": "severe aortic stenosis","severity": "high",           "description": "Peripheral vasodilation reduces coronary perfusion pressure across the stenotic valve" }
+      ],
+      "dietaryConflicts": [
+        { "item": "grapefruit", "severity": "high", "description": "Furanocoumarins in grapefruit inhibit intestinal CYP3A4, substantially increasing amlodipine levels" }
+      ]
+    },
+    {
+      "drugId": "D014",
+      "name": "metronidazole",
+      "brandNames": ["Flagyl", "Metrogel"],
+      "category": "Nitroimidazole Antibiotic / Antiprotozoal",
+      "warnings": [
+        "Absolute contraindication with alcohol — severe disulfiram-like reaction",
+        "Peripheral neuropathy risk with prolonged or high-dose use",
+        "Avoid in first trimester of pregnancy due to potential teratogenicity"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "high",     "description": "CYP2C9 inhibition substantially increases warfarin levels; INR can rise dramatically" },
+        { "drugId": "D017", "drugName": "lithium",    "severity": "moderate", "description": "Reduces renal lithium excretion, increasing risk of toxicity" },
+        { "drugId": "D025", "drugName": "clonazepam", "severity": "moderate", "description": "Additive CNS toxicity effects; monitor closely" }
+      ],
+      "allergyConflicts": ["metronidazole", "nitroimidazoles"],
+      "conditionConflicts": [
+        { "condition": "seizure disorder",        "severity": "high",            "description": "Lowers seizure threshold; use with caution and monitor closely" },
+        { "condition": "liver disease",           "severity": "high",            "description": "Severely impaired hepatic metabolism leads to drug accumulation and CNS toxicity" },
+        { "condition": "first trimester pregnancy","severity": "contraindicated","description": "Potential teratogenic effects in the first trimester" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "contraindicated", "description": "Disulfiram-like reaction: severe nausea, vomiting, flushing, palpitations, and hypotension. Avoid alcohol during therapy and 48 hours after completing course." }
+      ]
+    },
+    {
+      "drugId": "D015",
+      "name": "clarithromycin",
+      "brandNames": ["Biaxin", "Biaxin XL"],
+      "category": "Macrolide Antibiotic",
+      "warnings": [
+        "Potent CYP3A4 inhibitor — numerous serious drug interactions",
+        "Prolongs QT interval — obtain baseline ECG in at-risk patients",
+        "Monitor for hearing changes; auditory toxicity reported"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "high",         "description": "Inhibits CYP3A4 and CYP2C9, substantially increasing warfarin plasma levels and INR" },
+        { "drugId": "D009", "drugName": "simvastatin","severity": "contraindicated","description": "CYP3A4 inhibition causes severe myopathy and life-threatening rhabdomyolysis; combination is contraindicated" },
+        { "drugId": "D013", "drugName": "amlodipine", "severity": "high",         "description": "Markedly raises amlodipine plasma levels; risk of severe hypotension" },
+        { "drugId": "D016", "drugName": "digoxin",    "severity": "high",         "description": "P-glycoprotein inhibition and altered gut flora significantly increase digoxin levels" },
+        { "drugId": "D025", "drugName": "clonazepam", "severity": "moderate",     "description": "CYP3A4 inhibition increases benzodiazepine plasma levels; excessive sedation and respiratory depression" }
+      ],
+      "allergyConflicts": ["macrolides", "erythromycin", "clarithromycin"],
+      "conditionConflicts": [
+        { "condition": "QT prolongation","severity": "contraindicated","description": "Clarithromycin prolongs QT interval; risk of torsades de pointes and cardiac arrest" },
+        { "condition": "liver disease",  "severity": "high",           "description": "Severe hepatotoxicity risk; use alternative antibiotic" }
+      ],
+      "dietaryConflicts": []
+    },
+    {
+      "drugId": "D016",
+      "name": "digoxin",
+      "brandNames": ["Lanoxin"],
+      "category": "Cardiac Glycoside",
+      "warnings": [
+        "Narrow therapeutic index (0.5–2.0 ng/mL) — toxicity can be fatal",
+        "Toxicity signs: nausea, xanthopsia (yellow vision), bradycardia, arrhythmias",
+        "Hypokalemia dramatically increases toxicity risk — monitor electrolytes"
+      ],
+      "interactions": [
+        { "drugId": "D005", "drugName": "ciprofloxacin", "severity": "moderate", "description": "Altered gut flora increases digoxin absorption, raising serum levels" },
+        { "drugId": "D008", "drugName": "metoprolol",    "severity": "moderate", "description": "Additive bradycardia and AV conduction slowing" },
+        { "drugId": "D015", "drugName": "clarithromycin","severity": "high",     "description": "P-gp inhibition significantly increases digoxin levels; monitor for toxicity" },
+        { "drugId": "D024", "drugName": "furosemide",    "severity": "high",     "description": "Furosemide-induced hypokalemia dramatically increases digoxin receptor sensitivity and toxicity" }
+      ],
+      "allergyConflicts": ["digoxin", "cardiac glycosides"],
+      "conditionConflicts": [
+        { "condition": "ventricular fibrillation",    "severity": "contraindicated", "description": "Absolute contraindication; digoxin can perpetuate ventricular fibrillation" },
+        { "condition": "Wolff-Parkinson-White syndrome","severity": "contraindicated","description": "Accelerates accessory pathway conduction causing life-threatening ventricular arrhythmia" },
+        { "condition": "renal failure",               "severity": "high",            "description": "Digoxin is renally excreted; accumulates in renal failure causing toxicity" },
+        { "condition": "hypokalemia",                 "severity": "high",            "description": "Low potassium enhances digoxin binding to Na/K-ATPase, precipitating toxicity" }
+      ],
+      "dietaryConflicts": [
+        { "item": "high fiber diet","severity": "moderate","description": "Dietary fiber reduces GI absorption of digoxin; take doses consistently relative to meals" },
+        { "item": "licorice",       "severity": "high",    "description": "Licorice has pseudoaldosterone activity causing hypokalemia, markedly increasing digoxin toxicity risk" }
+      ]
+    },
+    {
+      "drugId": "D017",
+      "name": "lithium",
+      "brandNames": ["Eskalith", "Lithobid"],
+      "category": "Mood Stabilizer",
+      "warnings": [
+        "Narrow therapeutic index (0.6–1.2 mEq/L) — mandatory regular serum level monitoring",
+        "Maintain adequate hydration and consistent sodium intake — sodium depletion causes toxicity",
+        "Toxicity signs: coarse tremor, confusion, ataxia, seizures, renal failure"
+      ],
+      "interactions": [
+        { "drugId": "D002", "drugName": "aspirin",   "severity": "moderate", "description": "NSAIDs reduce renal prostaglandin synthesis, decreasing lithium renal clearance" },
+        { "drugId": "D003", "drugName": "ibuprofen", "severity": "high",     "description": "NSAIDs significantly increase lithium serum levels; risk of toxicity" },
+        { "drugId": "D007", "drugName": "lisinopril","severity": "high",     "description": "ACE inhibitors reduce renal lithium clearance; toxicity can develop rapidly" },
+        { "drugId": "D014", "drugName": "metronidazole","severity": "moderate","description": "Reduces renal lithium excretion, increasing risk of lithium toxicity" },
+        { "drugId": "D024", "drugName": "furosemide","severity": "high",     "description": "Sodium loss from loop diuretics causes compensatory proximal lithium reabsorption; dangerous toxicity" }
+      ],
+      "allergyConflicts": [],
+      "conditionConflicts": [
+        { "condition": "renal failure",     "severity": "contraindicated", "description": "Lithium is entirely renally excreted; renal failure causes dangerous accumulation" },
+        { "condition": "cardiovascular disease","severity": "high",        "description": "Lithium can cause T-wave changes; use cautiously and with cardiac monitoring" },
+        { "condition": "sodium depletion",  "severity": "high",            "description": "Dehydration or low-sodium states cause compensatory lithium reabsorption in proximal tubule" }
+      ],
+      "dietaryConflicts": [
+        { "item": "low sodium diet", "severity": "high",     "description": "Dietary sodium restriction causes the kidney to reabsorb more lithium; toxicity risk is high" },
+        { "item": "caffeine",        "severity": "moderate", "description": "Caffeine increases renal lithium excretion; abrupt cessation of caffeine can unpredictably raise lithium levels" },
+        { "item": "alcohol",         "severity": "moderate", "description": "Dehydration from alcohol potentiates lithium toxicity; impairs lithium monitoring compliance" }
+      ]
+    },
+    {
+      "drugId": "D018",
+      "name": "fluoxetine",
+      "brandNames": ["Prozac", "Sarafem", "Selfemra"],
+      "category": "Selective Serotonin Reuptake Inhibitor (SSRI)",
+      "warnings": [
+        "Black box warning: increased suicidality in patients under 25",
+        "Extremely long half-life (4–6 days; active metabolite norfluoxetine 4–16 days) — interactions persist weeks after stopping",
+        "Strong inhibitor of CYP2D6 and CYP2C19 — affects many co-administered drugs"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",   "severity": "moderate", "description": "CYP2C9 inhibition increases warfarin plasma levels; monitor INR" },
+        { "drugId": "D008", "drugName": "metoprolol", "severity": "moderate", "description": "CYP2D6 inhibition substantially increases metoprolol levels causing bradycardia" },
+        { "drugId": "D010", "drugName": "sertraline", "severity": "high",     "description": "Combining two SSRIs markedly increases serotonin syndrome and bleeding risk" },
+        { "drugId": "D025", "drugName": "clonazepam", "severity": "moderate", "description": "CYP3A4 inhibition increases clonazepam plasma levels; increased sedation and respiratory risk" }
+      ],
+      "allergyConflicts": ["SSRIs", "fluoxetine"],
+      "conditionConflicts": [
+        { "condition": "bipolar disorder", "severity": "high",     "description": "Antidepressant monotherapy in bipolar disorder can trigger manic episodes" },
+        { "condition": "seizure disorder", "severity": "moderate", "description": "SSRIs may lower seizure threshold in susceptible individuals" },
+        { "condition": "QT prolongation",  "severity": "moderate", "description": "High-dose fluoxetine can prolong QT interval" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "high", "description": "Significantly increases CNS depression and impairs psychomotor performance" }
+      ]
+    },
+    {
+      "drugId": "D019",
+      "name": "clopidogrel",
+      "brandNames": ["Plavix"],
+      "category": "P2Y12 Antiplatelet Agent",
+      "warnings": [
+        "Irreversibly inhibits platelets — bleeding risk persists for 7–10 days after stopping",
+        "Reduced efficacy in CYP2C19 poor metabolizers (genetic testing may be warranted)",
+        "Do not abruptly discontinue in patients with coronary stents — risk of stent thrombosis"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",  "severity": "high",     "description": "Dual anticoagulant/antiplatelet therapy substantially increases major hemorrhage risk" },
+        { "drugId": "D002", "drugName": "aspirin",   "severity": "high",     "description": "Dual antiplatelet therapy significantly increases major and minor bleeding events" },
+        { "drugId": "D010", "drugName": "sertraline","severity": "moderate", "description": "SSRI-induced platelet dysfunction adds to clopidogrel antiplatelet effect" },
+        { "drugId": "D011", "drugName": "omeprazole","severity": "high",     "description": "CYP2C19 inhibition reduces clopidogrel conversion to active metabolite, increasing thrombotic risk" }
+      ],
+      "allergyConflicts": ["thienopyridines", "clopidogrel"],
+      "conditionConflicts": [
+        { "condition": "active bleeding",          "severity": "contraindicated", "description": "Antiplatelet therapy is absolutely contraindicated during active hemorrhage" },
+        { "condition": "peptic ulcer disease",     "severity": "high",            "description": "Antiplatelet effect combined with mucosal disruption causes serious GI bleeding" },
+        { "condition": "CYP2C19 poor metabolizer", "severity": "high",            "description": "Genetic polymorphism prevents drug activation; consider alternative antiplatelet therapy" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "moderate", "description": "Additive antiplatelet effect and increased GI bleeding risk" }
+      ]
+    },
+    {
+      "drugId": "D020",
+      "name": "prednisone",
+      "brandNames": ["Deltasone", "Rayos", "Sterapred"],
+      "category": "Corticosteroid",
+      "warnings": [
+        "Never abruptly discontinue after >1 week of use — taper to prevent adrenal crisis",
+        "Long-term use causes HPA suppression, osteoporosis, hyperglycemia, immunosuppression, cataracts",
+        "Increased susceptibility to infections including opportunistic infections"
+      ],
+      "interactions": [
+        { "drugId": "D002", "drugName": "aspirin",  "severity": "moderate", "description": "Additive GI irritation; combined use substantially increases peptic ulcer risk" },
+        { "drugId": "D006", "drugName": "metformin","severity": "high",     "description": "Steroid-induced hyperglycemia directly opposes metformin's antidiabetic effect" },
+        { "drugId": "D022", "drugName": "glipizide","severity": "high",     "description": "Raises blood glucose, substantially reducing sulfonylurea efficacy" }
+      ],
+      "allergyConflicts": ["corticosteroids"],
+      "conditionConflicts": [
+        { "condition": "diabetes mellitus",  "severity": "high",     "description": "Causes steroid-induced hyperglycemia; requires antidiabetic dose adjustment" },
+        { "condition": "osteoporosis",       "severity": "high",     "description": "Accelerates bone density loss; initiate calcium, vitamin D, and bisphosphonate prophylaxis" },
+        { "condition": "peptic ulcer disease","severity": "high",    "description": "Suppresses mucosal prostaglandins; increases GI ulceration risk" },
+        { "condition": "active infection",   "severity": "high",     "description": "Immunosuppression can cause rapid dissemination of active infections" },
+        { "condition": "hypertension",       "severity": "moderate", "description": "Sodium and water retention from mineralocorticoid activity raises blood pressure" }
+      ],
+      "dietaryConflicts": [
+        { "item": "high sodium diet","severity": "moderate","description": "Corticosteroids cause sodium retention; high dietary sodium worsens fluid retention and hypertension" },
+        { "item": "alcohol",         "severity": "moderate","description": "Additive GI mucosal irritation and immunosuppressive effect" }
+      ]
+    },
+    {
+      "drugId": "D021",
+      "name": "allopurinol",
+      "brandNames": ["Zyloprim", "Aloprim"],
+      "category": "Xanthine Oxidase Inhibitor (Antigout)",
+      "warnings": [
+        "Risk of severe hypersensitivity reaction (Stevens-Johnson Syndrome / TEN) — highest in HLA-B*5801 carriers (Asian populations)",
+        "Start at lowest effective dose (100mg/day) and titrate slowly",
+        "Maintain adequate hydration (2–3L/day) to prevent xanthine stone formation"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",    "severity": "moderate", "description": "Allopurinol inhibits warfarin hepatic metabolism, increasing anticoagulant effect" },
+        { "drugId": "D004", "drugName": "amoxicillin", "severity": "moderate", "description": "Concurrent use increases incidence of ampicillin/amoxicillin maculopapular rash up to 3-fold" }
+      ],
+      "allergyConflicts": ["allopurinol"],
+      "conditionConflicts": [
+        { "condition": "renal failure", "severity": "high",     "description": "Active metabolite oxypurinol accumulates; significant dose reduction required" },
+        { "condition": "liver disease", "severity": "moderate", "description": "Impaired hepatic metabolism; monitor liver function tests periodically" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol",          "severity": "high",     "description": "Alcohol increases uric acid production and reduces allopurinol efficacy; worsens gout" },
+        { "item": "high purine diet", "severity": "moderate", "description": "Red meat, organ meat, and shellfish increase uric acid load, reducing allopurinol effectiveness" }
+      ]
+    },
+    {
+      "drugId": "D022",
+      "name": "glipizide",
+      "brandNames": ["Glucotrol", "Glucotrol XL"],
+      "category": "Sulfonylurea Antidiabetic",
+      "warnings": [
+        "Risk of serious hypoglycemia — particularly in elderly patients, those skipping meals, or with renal impairment",
+        "Monitor blood glucose regularly, especially during dose titration",
+        "Educate patient on hypoglycemia recognition and treatment with 15g of fast-acting carbohydrate"
+      ],
+      "interactions": [
+        { "drugId": "D002", "drugName": "aspirin",    "severity": "moderate", "description": "High-dose aspirin can potentiate sulfonylurea hypoglycemic effect" },
+        { "drugId": "D006", "drugName": "metformin",  "severity": "moderate", "description": "Additive glucose-lowering effect; monitor blood glucose closely to prevent hypoglycemia" },
+        { "drugId": "D020", "drugName": "prednisone", "severity": "high",     "description": "Corticosteroids raise blood glucose, substantially opposing glipizide effect" }
+      ],
+      "allergyConflicts": ["sulfonylureas", "sulfa drugs"],
+      "conditionConflicts": [
+        { "condition": "type 1 diabetes","severity": "contraindicated","description": "Sulfonylureas require functioning beta cells and are ineffective in type 1 diabetes" },
+        { "condition": "renal failure",  "severity": "high",           "description": "Active metabolites accumulate; prolonged and severe hypoglycemia risk" },
+        { "condition": "liver disease",  "severity": "high",           "description": "Impaired gluconeogenesis and drug clearance greatly increase hypoglycemia risk" },
+        { "condition": "G6PD deficiency","severity": "high",           "description": "Sulfonylureas can precipitate hemolytic anemia in G6PD-deficient patients" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "high", "description": "Alcohol inhibits gluconeogenesis, potentiating hypoglycemia; disulfiram-like reaction possible with some sulfonylureas" }
+      ]
+    },
+    {
+      "drugId": "D023",
+      "name": "naproxen",
+      "brandNames": ["Aleve", "Naprosyn", "Anaprox"],
+      "category": "NSAID",
+      "warnings": [
+        "Risk of serious cardiovascular thrombotic events, especially with prolonged use",
+        "Risk of GI ulceration, bleeding, and perforation — use gastroprotection if risk factors present",
+        "Use with particular caution in elderly patients"
+      ],
+      "interactions": [
+        { "drugId": "D001", "drugName": "warfarin",  "severity": "high",     "description": "NSAIDs potentiate warfarin; increased risk of serious GI and intracranial bleeding" },
+        { "drugId": "D007", "drugName": "lisinopril","severity": "moderate", "description": "Reduces antihypertensive efficacy; increases AKI risk, especially in volume-depleted patients" },
+        { "drugId": "D017", "drugName": "lithium",   "severity": "high",     "description": "Reduces renal lithium clearance, increasing serum levels and toxicity risk" }
+      ],
+      "allergyConflicts": ["NSAIDs", "aspirin", "naproxen", "salicylates"],
+      "conditionConflicts": [
+        { "condition": "peptic ulcer disease","severity": "contraindicated","description": "NSAIDs inhibit gastroprotective prostaglandins, directly worsening ulceration" },
+        { "condition": "heart failure",        "severity": "high",           "description": "Sodium/water retention from prostaglandin inhibition worsens decompensation" },
+        { "condition": "renal failure",        "severity": "high",           "description": "Reduces prostaglandin-mediated renal perfusion; can precipitate acute kidney injury" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol", "severity": "high", "description": "Markedly increases risk of serious GI ulceration and bleeding" }
+      ]
+    },
+    {
+      "drugId": "D024",
+      "name": "furosemide",
+      "brandNames": ["Lasix"],
+      "category": "Loop Diuretic",
+      "warnings": [
+        "Risk of serious electrolyte imbalances: hypokalemia, hyponatremia, hypomagnesemia",
+        "Monitor BMP (electrolytes, BUN, creatinine) regularly",
+        "High-dose IV furosemide can cause irreversible ototoxicity, especially with aminoglycosides"
+      ],
+      "interactions": [
+        { "drugId": "D003", "drugName": "ibuprofen",  "severity": "moderate", "description": "NSAIDs blunt diuretic response and further impair renal function" },
+        { "drugId": "D007", "drugName": "lisinopril", "severity": "moderate", "description": "First-dose hypotension risk; combined volume depletion increases AKI risk" },
+        { "drugId": "D016", "drugName": "digoxin",    "severity": "high",     "description": "Furosemide-induced hypokalemia dramatically increases digoxin toxicity at therapeutic levels" },
+        { "drugId": "D017", "drugName": "lithium",    "severity": "high",     "description": "Sodium depletion from loop diuretic causes compensatory proximal lithium reabsorption; toxicity" }
+      ],
+      "allergyConflicts": ["sulfa drugs", "furosemide", "loop diuretics"],
+      "conditionConflicts": [
+        { "condition": "anuria",           "severity": "contraindicated", "description": "No urine output makes loop diuretics ineffective; use implies renal failure requiring other intervention" },
+        { "condition": "hypokalemia",      "severity": "contraindicated", "description": "Loop diuretics worsen hypokalemia; correct electrolytes first" },
+        { "condition": "severe dehydration","severity": "contraindicated","description": "Further volume depletion causes hemodynamic compromise and AKI" },
+        { "condition": "gout",             "severity": "moderate",        "description": "Furosemide reduces uric acid excretion, precipitating acute gout attacks" }
+      ],
+      "dietaryConflicts": [
+        { "item": "licorice", "severity": "moderate", "description": "Licorice has pseudoaldosterone activity; combined with furosemide worsens hypokalemia significantly" }
+      ]
+    },
+    {
+      "drugId": "D025",
+      "name": "clonazepam",
+      "brandNames": ["Klonopin"],
+      "category": "Benzodiazepine",
+      "warnings": [
+        "High abuse and physical dependence potential — Schedule IV controlled substance",
+        "Abrupt discontinuation after prolonged use causes withdrawal seizures; taper gradually",
+        "Black box warning: combined use with opioids can cause fatal respiratory depression",
+        "CNS depression markedly worsened by other depressants including alcohol"
+      ],
+      "interactions": [
+        { "drugId": "D010", "drugName": "sertraline",     "severity": "moderate", "description": "Additive CNS depressant effect; increased sedation and cognitive impairment" },
+        { "drugId": "D014", "drugName": "metronidazole",  "severity": "moderate", "description": "Additive CNS depression; monitor for excessive sedation" },
+        { "drugId": "D015", "drugName": "clarithromycin", "severity": "moderate", "description": "Strong CYP3A4 inhibition markedly raises clonazepam levels; serious respiratory depression risk" },
+        { "drugId": "D018", "drugName": "fluoxetine",     "severity": "moderate", "description": "CYP3A4 inhibition by fluoxetine elevates clonazepam plasma levels" }
+      ],
+      "allergyConflicts": ["benzodiazepines", "clonazepam"],
+      "conditionConflicts": [
+        { "condition": "sleep apnea",             "severity": "high",            "description": "Respiratory depression from benzodiazepines significantly worsens sleep-disordered breathing" },
+        { "condition": "severe respiratory failure","severity": "contraindicated","description": "Central respiratory depression is absolutely contraindicated in respiratory failure" },
+        { "condition": "substance use disorder",  "severity": "high",            "description": "High abuse potential; benzodiazepines are high-risk in patients with substance use history" },
+        { "condition": "glaucoma",                "severity": "high",            "description": "May precipitate acute narrow-angle glaucoma" },
+        { "condition": "myasthenia gravis",       "severity": "contraindicated", "description": "Muscle relaxant effect further weakens respiratory muscles; can be fatal" }
+      ],
+      "dietaryConflicts": [
+        { "item": "alcohol",    "severity": "contraindicated", "description": "Synergistic CNS and respiratory depression; combination can be fatal" },
+        { "item": "grapefruit", "severity": "moderate",        "description": "Furanocoumarins inhibit CYP3A4, increasing benzodiazepine plasma levels and sedation" }
+      ]
+    }
+  ]
+}
