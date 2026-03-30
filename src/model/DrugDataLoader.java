@@ -25,7 +25,7 @@ public DrugDataLoader (String filePath) throws IOException {
 		
 		/* Validation for file reference error*/
 		if(dataset.getDrugs()==null) {
-			throw new IOException("Error is reading patient data file"+ filePath);
+			throw new IOException("Error in reading drug data file"+ filePath);
 		}
 		
 		/* Storing the data as unmodifiable list */
