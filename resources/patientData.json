@@ -1,0 +1,148 @@
+{
+    "patients": [
+    {
+      "patientId": "P001",
+      "name": "John Smith",
+      "dateOfBirth": "1957-04-12",
+      "age": 68,
+      "sex": "Male",
+      "medications": ["D001", "D004", "D003"],
+      "allergies": ["penicillin"],
+      "conditions": ["type 2 diabetes", "hypertension", "hyperlipidemia"],
+      "dietaryHabits": ["low-sodium diet", "occasional alcohol"],
+      "clinicalNotes": "Patient managing T2DM and hypertension for 10+ years. Last HbA1c 7.2%. eGFR stable at 68 mL/min. BP controlled at 128/78 mmHg on current regimen. LDL reduced from 162 to 94 mg/dL on atorvastatin. Penicillin allergy confirmed — anaphylaxis reported in 1989. Annual renal function and lipid panel scheduled."
+    },
+    {
+      "patientId": "P002",
+      "name": "Mary Johnson",
+      "dateOfBirth": "1950-08-22",
+      "age": 75,
+      "sex": "Female",
+      "medications": ["D002", "D015", "D014", "D004"],
+      "allergies": [],
+      "conditions": ["atrial fibrillation", "heart failure", "hypertension"],
+      "dietaryHabits": ["vitamin K rich foods", "low-sodium diet"],
+      "clinicalNotes": "Persistent atrial fibrillation diagnosed 2018, NYHA Class II heart failure. INR target 2.0–3.0; last INR 2.4. Digoxin level 0.9 ng/mL — within therapeutic range. Dietary vitamin K intake counseled to remain consistent. Monthly electrolyte and renal function monitoring in place. No known drug allergies on file."
+    },
+    {
+      "patientId": "P003",
+      "name": "David Lee",
+      "dateOfBirth": "1980-11-03",
+      "age": 45,
+      "sex": "Male",
+      "medications": ["D009", "D010", "D008"],
+      "allergies": ["sulfa", "codeine"],
+      "conditions": ["major depressive disorder", "generalized anxiety disorder", "chronic lower back pain"],
+      "dietaryHabits": ["alcohol", "grapefruit"],
+      "clinicalNotes": "MDD and GAD managed by psychiatry; sertraline titrated to 100 mg. Alprazolam prescribed at lowest effective dose with strict refill controls. Ibuprofen used PRN for lumbar disc herniation confirmed on MRI. Patient reports 2–3 alcoholic drinks daily — counseled on risks repeatedly. Sulfa allergy: hives and facial swelling. Codeine allergy: nausea and respiratory distress."
+    },
+    {
+      "patientId": "P004",
+      "name": "Sarah Williams",
+      "dateOfBirth": "1993-02-17",
+      "age": 32,
+      "sex": "Female",
+      "medications": ["D011"],
+      "allergies": ["shellfish", "latex"],
+      "conditions": ["hypothyroidism"],
+      "dietaryHabits": ["high coffee intake", "soy milk daily", "calcium-rich diet"],
+      "clinicalNotes": "Hashimoto's thyroiditis diagnosed 2020. TSH last recorded at 3.1 mIU/L on levothyroxine 75 mcg. Patient counseled on taking medication 30–60 minutes before breakfast and separating from coffee, soy, and calcium supplements. Shellfish allergy: anaphylaxis. Latex allergy: contact dermatitis. No cardiovascular or metabolic comorbidities at this time."
+    },
+    {
+      "patientId": "P005",
+      "name": "Robert Brown",
+      "dateOfBirth": "1970-06-30",
+      "age": 55,
+      "sex": "Male",
+      "medications": ["D005", "D014", "D020"],
+      "allergies": [],
+      "conditions": ["COPD", "gout", "hypertension"],
+      "dietaryHabits": ["alcohol", "licorice tea"],
+      "clinicalNotes": "COPD GOLD Stage II; FEV1 62% predicted. Metoprolol initiated for hypertension — pulmonologist to review given bronchospasm risk. Gout managed with dietary modification; uric acid 7.8 mg/dL. Furosemide added for fluid retention; potassium levels monitored monthly. Aspirin 81 mg for cardiovascular prophylaxis. Patient reports daily licorice tea consumption — advised to discontinue."
+    },
+    {
+      "patientId": "P006",
+      "name": "Emily Chen",
+      "dateOfBirth": "1998-09-05",
+      "age": 27,
+      "sex": "Female",
+      "medications": ["D023", "D011"],
+      "allergies": ["penicillin", "aspirin"],
+      "conditions": ["bipolar disorder type I", "hypothyroidism"],
+      "dietaryHabits": ["low-sodium diet", "high caffeine intake"],
+      "clinicalNotes": "Bipolar I disorder managed by psychiatry since age 21. Lithium level last 0.85 mEq/L — within target range of 0.8–1.2 mEq/L. Lithium-induced hypothyroidism confirmed; levothyroxine added 2023. Patient on low-sodium diet for unrelated reasons — instructed to maintain consistent sodium intake. TSH, renal function, and serum lithium monitored every 3 months. Penicillin allergy: rash. Aspirin allergy: bronchospasm."
+    },
+    {
+      "patientId": "P007",
+      "name": "Michael Davis",
+      "dateOfBirth": "1963-01-25",
+      "age": 62,
+      "sex": "Male",
+      "medications": ["D001", "D022", "D004"],
+      "allergies": [],
+      "conditions": ["type 2 diabetes", "chronic kidney disease", "hypertension"],
+      "dietaryHabits": ["low-potassium diet"],
+      "clinicalNotes": "CKD Stage 3b; eGFR last measured at 32 mL/min/1.73m². Metformin continued at reduced dose with close monitoring — nephrology review pending regarding lactic acidosis risk threshold. Glipizide dose adjusted; hypoglycemia episodes reported twice in past quarter. BP 136/84 mmHg. Low-potassium diet per nephrology recommendation. No documented allergies. Creatinine and eGFR checked monthly."
+    },
+    {
+      "patientId": "P008",
+      "name": "Linda Martinez",
+      "dateOfBirth": "1977-03-14",
+      "age": 48,
+      "sex": "Female",
+      "medications": ["D013", "D024", "D003"],
+      "allergies": ["ibuprofen"],
+      "conditions": ["rheumatoid arthritis", "osteoporosis", "hyperlipidemia"],
+      "dietaryHabits": ["grapefruit daily", "alcohol"],
+      "clinicalNotes": "Seropositive RA on prednisone 10 mg/day for 18 months; rheumatology monitoring for steroid-related complications. DEXA scan T-score –2.6 at lumbar spine — calcium and vitamin D supplementation in place. Naproxen added for acute flare management; GI prophylaxis with PPI discussed. Atorvastatin for hyperlipidemia. Ibuprofen allergy: GI bleeding episode 2019. Patient counseled on grapefruit and alcohol — non-compliant at last visit."
+    },
+    {
+      "patientId": "P009",
+      "name": "James Wilson",
+      "dateOfBirth": "2006-07-11",
+      "age": 19,
+      "sex": "Male",
+      "medications": ["D021"],
+      "allergies": [],
+      "conditions": ["acne vulgaris"],
+      "dietaryHabits": ["dairy-heavy diet"],
+      "clinicalNotes": "Moderate inflammatory acne vulgaris; failed topical retinoid course. Doxycycline 100 mg initiated for 12-week course. Patient advised to take with full glass of water, remain upright 30 minutes post-dose, and separate from dairy products by at least 1 hour. Sunscreen use counseled due to photosensitivity risk. No known drug or food allergies. Follow-up in 6 weeks to assess response."
+    },
+    {
+      "patientId": "P010",
+      "name": "Patricia Taylor",
+      "dateOfBirth": "1954-12-01",
+      "age": 71,
+      "sex": "Female",
+      "medications": ["D002", "D009", "D019", "D020"],
+      "allergies": ["penicillin", "codeine"],
+      "conditions": ["atrial fibrillation", "major depressive disorder", "chronic pain"],
+      "dietaryHabits": ["vitamin K rich foods", "alcohol"],
+      "clinicalNotes": "Paroxysmal atrial fibrillation on warfarin; INR last 2.1, target 2.0–3.0. MDD managed with sertraline 75 mg — partial response, psychiatry follow-up scheduled. Tramadol added for chronic osteoarthritis pain by pain management; primary care notified of serotonin risk. Aspirin 81 mg for secondary cardiovascular prevention. Patient reports regular alcohol use — counseled on INR variability and falls risk. Penicillin allergy: anaphylaxis. Codeine allergy: vomiting and respiratory distress."
+    },
+    {
+      "patientId": "P011",
+      "name": "Carlos Rodriguez",
+      "dateOfBirth": "1986-05-20",
+      "age": 39,
+      "sex": "Male",
+      "medications": ["D005", "D004"],
+      "allergies": ["aspirin", "NSAIDs"],
+      "conditions": ["asthma", "hypertension"],
+      "dietaryHabits": ["potassium-rich foods", "high caffeine intake"],
+      "clinicalNotes": "Moderate persistent asthma; last spirometry FEV1/FVC 0.68. Metoprolol initiated for newly diagnosed hypertension — pulmonology consulted regarding beta-blocker risk in asthma; awaiting guidance. Lisinopril added for additional BP control. Aspirin allergy: severe bronchospasm (AERD confirmed). NSAID allergy class-wide per allergist evaluation. Potassium level 4.6 mEq/L — within range; repeat in 3 months. Inhaler technique reviewed at last visit."
+    },
+    {
+      "patientId": "P012",
+      "name": "Susan Anderson",
+      "dateOfBirth": "1942-10-08",
+      "age": 83,
+      "sex": "Female",
+      "medications": ["D015", "D014", "D002", "D003", "D005", "D004"],
+      "allergies": ["sulfa", "ciprofloxacin"],
+      "conditions": ["heart failure", "atrial fibrillation", "hyperlipidemia", "hypertension", "hypokalemia"],
+      "dietaryHabits": ["vitamin K rich foods", "low-sodium diet", "grapefruit"],
+      "clinicalNotes": "NYHA Class III heart failure; EF 35% on last echocardiogram. Permanent atrial fibrillation; INR 2.6 on warfarin. Digoxin 0.125 mg/day; last level 1.1 ng/mL — upper end of range, potassium closely monitored given chronic hypokalemia (K+ 3.2 mEq/L; oral supplementation ongoing). Atorvastatin for hyperlipidemia; patient consumes grapefruit regularly — dietary counseling given, compliance inconsistent. Sulfa allergy: anaphylaxis. Ciprofloxacin allergy: rash and joint pain. Geriatrics and cardiology co-managing. Medication reconciliation reviewed at every visit."
+    }
+  ]
+}

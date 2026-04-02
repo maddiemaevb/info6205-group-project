@@ -1,0 +1,95 @@
+{
+  "$id": "https://drugalertsystem.com/schemas/patientData.schema.json",
+  "title": "Patient",
+  "description": "Schema for a single patient record in the drug interaction alert system",
+  "type": "object",
+  "required": [
+    "patientId",
+    "name",
+    "dateOfBirth",
+    "age",
+    "sex",
+    "medications",
+    "allergies",
+    "conditions",
+    "dietaryHabits",
+    "clinicalNotes"
+  ],
+  "properties": {
+    "patientId": {
+      "type": "string",
+      "description": "Unique identifier for the patient",
+      "pattern": "^P[0-9]{3}$",
+      "examples": ["P001", "P012"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name of the patient; used as the search key in the patient name search bar",
+      "minLength": 1,
+      "examples": ["John Smith", "Mary Johnson"]
+    },
+    "dateOfBirth": {
+      "type": "string",
+      "description": "Patient date of birth in ISO 8601 format",
+      "format": "date",
+      "examples": ["1957-04-12", "1993-02-17"]
+    },
+    "age": {
+      "type": "integer",
+      "description": "Patient age in years at time of record creation; derived from dateOfBirth",
+      "minimum": 0,
+      "maximum": 130
+    },
+    "sex": {
+      "type": "string",
+      "description": "Biological sex of the patient; relevant for drug dosing and contraindications",
+      "enum": ["Male", "Female", "Other"]
+    },
+    "medications": {
+      "type": "array",
+      "description": "List of drugIds currently prescribed to the patient; each resolves to a full drug record via hash map",
+      "items": {
+        "type": "string",
+        "pattern": "^D[0-9]{3}$",
+        "description": "drugId reference — foreign key to the drugs collection"
+      },
+      "uniqueItems": true
+    },
+    "allergies": {
+      "type": "array",
+      "description": "List of known allergens; matched against allergyConflicts.allergen in drug records. Can be empty.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "examples": [[], ["penicillin"], ["sulfa", "codeine", "aspirin"]]
+    },
+    "conditions": {
+      "type": "array",
+      "description": "List of active medical conditions; matched against conditionConflicts.condition in drug records",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "examples": [["type 2 diabetes", "hypertension"], ["asthma"]]
+    },
+    "dietaryHabits": {
+      "type": "array",
+      "description": "List of notable dietary habits or regularly consumed items; matched against dietaryConflicts.item in drug records",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "examples": [["alcohol", "grapefruit"], ["low-sodium diet", "high caffeine intake"]]
+    },
+    "clinicalNotes": {
+      "type": "string",
+      "description": "Free-text clinical notes entered by the treating physician or pharmacist; not used in automated alert logic",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

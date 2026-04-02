@@ -1,0 +1,169 @@
+{
+  "$id": "https://drugalertsystem.com/schemas/drugData.schema.json",
+  "title": "Drug",
+  "description": "Schema for a single drug entry in the drug interaction alert system",
+  "type": "object",
+  "required": [
+    "drugId",
+    "genericName",
+    "brandNames",
+    "drugClass",
+    "description",
+    "warnings",
+    "interactions",
+    "allergyConflicts",
+    "conditionConflicts",
+    "dietaryConflicts"
+  ],
+  "properties": {
+    "drugId": {
+      "type": "string",
+      "description": "Unique identifier for the drug; used as the hash map key for O(1) retrieval",
+      "pattern": "^D[0-9]{3}$",
+      "examples": ["D001", "D012"]
+    },
+    "genericName": {
+      "type": "string",
+      "description": "Generic (non-proprietary) name of the drug; inserted into the trie for autocomplete",
+      "minLength": 1,
+      "examples": ["metformin", "warfarin"]
+    },
+    "brandNames": {
+      "type": "array",
+      "description": "List of brand names; each is also inserted into the trie for autocomplete",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "examples": [["Glucophage", "Fortamet"], ["Coumadin", "Jantoven"]]
+    },
+    "drugClass": {
+      "type": "string",
+      "description": "Pharmacological class and subclass of the drug",
+      "minLength": 1,
+      "examples": ["Biguanide / Antidiabetic", "Anticoagulant / Vitamin K Antagonist"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Plain-language clinical summary of the drug's mechanism and primary uses",
+      "minLength": 1
+    },
+    "warnings": {
+      "type": "array",
+      "description": "List of clinically significant warnings associated with this drug",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "interactions": {
+      "type": "array",
+      "description": "List of known drug-drug interactions",
+      "items": {
+        "type": "object",
+        "required": ["drugId", "genericName", "severity", "description"],
+        "properties": {
+          "drugId": {
+            "type": "string",
+            "description": "drugId of the interacting drug; resolves to a full drug record via hash map",
+            "pattern": "^D[0-9]{3}$"
+          },
+          "genericName": {
+            "type": "string",
+            "description": "Generic name of the interacting drug; denormalized for readability",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "description": "Clinical severity of the interaction",
+            "enum": ["HIGH", "MODERATE", "LOW"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Clinical explanation of the interaction mechanism and risk",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "allergyConflicts": {
+      "type": "array",
+      "description": "List of allergens that conflict with this drug",
+      "items": {
+        "type": "object",
+        "required": ["allergen", "severity", "description"],
+        "properties": {
+          "allergen": {
+            "type": "string",
+            "description": "Name of the allergen (drug name, drug class, or excipient)",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["HIGH", "MODERATE", "LOW"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Clinical explanation of the allergy conflict",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "conditionConflicts": {
+      "type": "array",
+      "description": "List of medical conditions that conflict with this drug",
+      "items": {
+        "type": "object",
+        "required": ["condition", "severity", "description"],
+        "properties": {
+          "condition": {
+            "type": "string",
+            "description": "Medical condition name",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["HIGH", "MODERATE", "LOW"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Clinical explanation of why this condition conflicts with the drug",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "dietaryConflicts": {
+      "type": "array",
+      "description": "List of dietary items that conflict with this drug; can be empty array if none exist",
+      "items": {
+        "type": "object",
+        "required": ["item", "severity", "description"],
+        "properties": {
+          "item": {
+            "type": "string",
+            "description": "Dietary item, food group, or substance (e.g. alcohol, grapefruit, dairy)",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["HIGH", "MODERATE", "LOW"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Clinical explanation of the dietary interaction",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
