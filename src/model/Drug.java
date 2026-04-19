@@ -9,7 +9,7 @@ public class Drug {
 		private List<String> brandNames;
 		private String category;
 		private List<String> warnings;
-		private List<DrugInteraction> interactions;
+		private List<DrugConflict> interactions;
 		private List<String> allergyConflicts;
 		private List<ConditionConflict> conditionConflicts;
 		private List<DietaryConflict> dietaryConflicts;
@@ -29,7 +29,7 @@ public class Drug {
 		public List<String> getWarnings() {
 			return this.warnings;
 		}
-		public List<DrugInteraction> getInteractions() {
+		public List<DrugConflict> getInteractions() {
 			return this.interactions;
 		}
 		public List<String> getAllergyConflicts() {
@@ -56,7 +56,7 @@ public class Drug {
 		public void setWarnings(List<String> warnings) {
 			this.warnings = warnings;
 		}
-		public void setInteractions(List<DrugInteraction> interactions) {
+		public void setInteractions(List<DrugConflict> interactions) {
 			this.interactions = interactions;
 		}
 		public void setAllergyConflicts(List<String> allergyConflicts) {
@@ -69,5 +69,20 @@ public class Drug {
 			this.dietaryConflicts = dietaryConflicts;
 		}
 		
+		@Override
+		public boolean equals(Object object) {
+			if(this==object) {
+				return true;
+			}
+			if(!(object instanceof Drug)) {
+				return false;
+			}
+			Drug other = (Drug) object;
+			return this.getDrugId().equals(other.getDrugId());
+		}
 		
+		@Override
+		public int hashCode() {
+			return drugId.hashCode();
+		}
 }

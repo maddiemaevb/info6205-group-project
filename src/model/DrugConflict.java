@@ -3,7 +3,7 @@
  */
 package model;
 
-public class DrugInteraction {
+public class DrugConflict {
 	
 	private String drugId;		// ID of drug with which it has contraindications
 	private String drugName;	// Name of drug with which it has contraindications
