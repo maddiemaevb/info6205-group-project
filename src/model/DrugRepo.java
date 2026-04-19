@@ -2,12 +2,14 @@ package model;
 
 import java.util.*;
 
-public class DrugRepository {
+public class DrugRepo {
 
-    private Map<String, Drug> drugMap;
+    private Map<String, Drug> drugsById;
+    private Map<String, Drug> drugsByName;
 
-    public DrugRepository() {
-        this.drugMap = new HashMap<>();
+    public DrugRepo() {
+        this.drugsById = new HashMap<>();
+        this.drugsByName = new HashMap<>();
     }
 
     /**
@@ -15,9 +17,20 @@ public class DrugRepository {
      */
     public void loadDrugs(List<Drug> drugs) {
         for (Drug drug : drugs) {
+            
             if (drug.getName() != null) {
-                // store using lowercase for easier searching
-                drugMap.put(drug.getName().toLowerCase(), drug);
+                drugsByName.put(drug.getName().toLowerCase(), drug);
+            }
+
+            if(drug.getDrugId() != null){
+                drugsById.put(drug.getDrugId(), drug);
+            }
+            if(drug.getBrandNames() != null){
+                for(String brand : drug.getBrandNames()){
+                    if(brand != null && !brand.trim().isEmpty()){
+                        drugsByName.put(brand.toLowerCase(), drug);
+                    }
+                }
             }
         }
     }
@@ -27,7 +40,12 @@ public class DrugRepository {
      */
     public Drug getDrugByName(String name) {
         if (name == null) return null;
-        return drugMap.get(name.toLowerCase());
+        return drugsByName.get(name.toLowerCase());
+    }
+
+    public Drug getDrugsById(String drugId){
+        if(drugId == null) return null;
+        return drugsById.get(drugId);
     }
 
     /**
@@ -38,17 +56,22 @@ public class DrugRepository {
         return drugMap.containsKey(name.toLowerCase());
     }
 
+    public boolean containsDrugId(String drugId){
+        if (drugId == null) return false;
+        return drugsById.containsKey(drugId);
+    }
+
     /**
      * Get all drugs (used for Trie loading, etc.)
      */
     public Collection<Drug> getAllDrugs() {
-        return drugMap.values();
+        return drugsById.values();
     }
 
     /**
      * Optional: get size (useful for debugging)
      */
     public int size() {
-        return drugMap.size();
+        return drugsById.size();
     }
 }
