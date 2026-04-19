@@ -7,7 +7,7 @@ public class DrugRepo {
     private Map<String, Drug> drugsById;
     private Map<String, Drug> drugsByName;
 
-    public DrugRepository() {
+    public DrugRepo() {
         this.drugsById = new HashMap<>();
         this.drugsByName = new HashMap<>();
     }
