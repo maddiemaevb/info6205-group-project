@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public class DrugRepository {
+public class DrugRepo {
 
     private Map<String, Drug> drugMap;
 
