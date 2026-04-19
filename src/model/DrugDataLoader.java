@@ -10,7 +10,7 @@ public class DrugDataLoader {
 	
 	private final List<Drug> drugs;
 	
-public DrugDataLoader (String filePath) throws IOException {
+	public DrugDataLoader (String filePath) throws IOException {
 		
 		/* Parse JSON file into Java object */
 		ObjectMapper mapper = new ObjectMapper();
@@ -18,14 +18,14 @@ public DrugDataLoader (String filePath) throws IOException {
 		/* Object mapper reads jason file and maps it to attribute sif java object */
 		DrugDataset dataset = mapper.readValue(new File(filePath), DrugDataset.class);
 		
-		/* Validation for empty file */
-		if(dataset.getDrugs().isEmpty()) {
-			throw new IOException("Drug data file is empty"+ filePath);
-		}
-		
 		/* Validation for file reference error*/
 		if(dataset.getDrugs()==null) {
 			throw new IOException("Error in reading drug data file"+ filePath);
+		}
+		
+		/* Validation for empty file */
+		if(dataset.getDrugs().isEmpty()) {
+			throw new IOException("Drug data file is empty"+ filePath);
 		}
 		
 		/* Storing the data as unmodifiable list */
