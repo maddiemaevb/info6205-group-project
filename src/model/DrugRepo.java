@@ -53,7 +53,7 @@ public class DrugRepo {
      */
     public boolean containsDrug(String name) {
         if (name == null) return false;
-        return drugMap.containsKey(name.toLowerCase());
+        return drugsByName.containsKey(name.toLowerCase());
     }
 
     public boolean containsDrugId(String drugId){
