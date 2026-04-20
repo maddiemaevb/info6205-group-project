@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Drug {
 	
 		private String drugId;
@@ -9,7 +11,8 @@ public class Drug {
 		private List<String> brandNames;
 		private String category;
 		private List<String> warnings;
-		private List<DrugConflict> interactions;
+		@JsonProperty("interactions") 
+		private List<DrugConflict> drugConflicts;
 		private List<String> allergyConflicts;
 		private List<ConditionConflict> conditionConflicts;
 		private List<DietaryConflict> dietaryConflicts;
@@ -29,8 +32,8 @@ public class Drug {
 		public List<String> getWarnings() {
 			return this.warnings;
 		}
-		public List<DrugConflict> getInteractions() {
-			return this.interactions;
+		public List<DrugConflict> getDrugConflicts() {
+			return this.drugConflicts;
 		}
 		public List<String> getAllergyConflicts() {
 			return this.allergyConflicts;
@@ -56,8 +59,8 @@ public class Drug {
 		public void setWarnings(List<String> warnings) {
 			this.warnings = warnings;
 		}
-		public void setInteractions(List<DrugConflict> interactions) {
-			this.interactions = interactions;
+		public void setDrugConflict(List<DrugConflict> drugConflicts) {
+			this.drugConflicts = drugConflicts;
 		}
 		public void setAllergyConflicts(List<String> allergyConflicts) {
 			this.allergyConflicts = allergyConflicts;

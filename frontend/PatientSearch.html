@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Drug Alert System</title>
+</head>
+<body>
+
+  <h1>Drug Alert System</h1>
+
+  <!-- Step 1: Patient Search -->
+  <h2>Patient Search</h2>
+  <input type="text" id="patientInput" placeholder="Enter patient name" />
+  <button onclick="searchPatient()">Search</button>
+  <p id="patientError"></p>
+
+  <!-- Step 2: Patient Info (hidden until patient is found) -->
+  <div id="patientInfo" style="display:none">
+    <h2>Patient Information</h2>
+    <p id="patientName"></p>
+    <p id="patientId"></p>
+    <p id="patientDob"></p>
+    <p id="patientAge"></p>
+    <p id="patientSex"></p>
+    <p id="patientMedications"></p>
+    <p id="patientAllergies"></p>
+    <p id="patientConditions"></p>
+    <p id="patientDietary"></p>
+    <p id="patientNotes"></p>
+
+    <!-- Step 3: Drug Check (shown once patient is loaded) -->
+    <h2>Check New Drug</h2>
+    <input type="text" id="drugInput" placeholder="Enter drug name" />
+    <button onclick="checkDrug()">Check</button>
+    <p id="drugError"></p>
+
+    <!-- Step 4: Conflict Results -->
+    <div id="conflictResult" style="display:none">
+      <h3 id="conflictHeading"></h3>
+      <ul id="conflictList"></ul>
+    </div>
+  </div>
+
+  <script>
+
+    // Stores the current patient's medication list
+    // Used when checking a new drug for conflicts
+    let currentPatientMeds = [];
+
+    // ── Search patient by name ────────────────
+    async function searchPatient() {
+      const name = document.getElementById('patientInput').value.trim();
+
+      document.getElementById('patientError').textContent = '';
+      document.getElementById('patientInfo').style.display = 'none';
+      document.getElementById('conflictResult').style.display = 'none';
+
+      if (!name) {
+        document.getElementById('patientError').textContent = 'Please enter a patient name.';
+        return;
+      }
+
+      try {
+        // API call to patient endpoint
+        const res = await fetch(`http://localhost:8080/api/patients?name=${encodeURIComponent(name)}`);
+
+        if (res.status === 404) {
+          document.getElementById('patientError').textContent = 'Patient not found.';
+          return;
+        }
+
+        const patient = await res.json();
+        renderPatient(patient);
+
+      } catch (err) {
+        document.getElementById('patientError').textContent = 'Error connecting to server.';
+      }
+    }
+
+    // ── Render patient info ───────────────────
+    function renderPatient(p) {
+      document.getElementById('patientName').textContent       = 'Name: ' + p.name;
+      document.getElementById('patientId').textContent         = 'Patient ID: ' + p.patientId;
+      document.getElementById('patientDob').textContent        = 'Date of Birth: ' + p.dateOfBirth;
+      document.getElementById('patientAge').textContent        = 'Age: ' + p.age;
+      document.getElementById('patientSex').textContent        = 'Sex: ' + p.sex;
+      document.getElementById('patientMedications').textContent = 'Medications: ' + (p.medications?.join(', ') || 'None');
+      document.getElementById('patientAllergies').textContent  = 'Allergies: ' + (p.allergies?.join(', ') || 'None');
+      document.getElementById('patientConditions').textContent = 'Conditions: ' + (p.conditions?.join(', ') || 'None');
+      document.getElementById('patientDietary').textContent    = 'Dietary Habits: ' + (p.dietaryHabits?.join(', ') || 'None');
+      document.getElementById('patientNotes').textContent      = 'Clinical Notes: ' + p.clinicalNotes;
+
+      // Store medication list for drug conflict check
+      currentPatientMeds = p.medications || [];
+
+      document.getElementById('patientInfo').style.display = 'block';
+    }
+
+    // ── Check new drug against patient meds ──
+    async function checkDrug() {
+      const drug = document.getElementById('drugInput').value.trim();
+
+      document.getElementById('drugError').textContent = '';
+      document.getElementById('conflictResult').style.display = 'none';
+
+      if (!drug) {
+        document.getElementById('drugError').textContent = 'Please enter a drug name.';
+        return;
+      }
+
+      try {
+        // API call to contraindication endpoint
+        // Passes drug name and patient's current medications as comma-separated IDs
+        const medsParam = currentPatientMeds.join(',');
+        const res = await fetch(`http://localhost:8080/api/contraindications?drug=${encodeURIComponent(drug)}&patientMeds=${encodeURIComponent(medsParam)}`);
+        const result = await res.json();
+
+        renderConflicts(drug, result);
+
+      } catch (err) {
+        document.getElementById('drugError').textContent = 'Error connecting to server.';
+      }
+    }
+
+    // ── Render conflict results ───────────────
+    function renderConflicts(drugName, result) {
+      const heading = document.getElementById('conflictHeading');
+      const list    = document.getElementById('conflictList');
+
+      list.innerHTML = '';
+
+      if (!result.hasSafetyAlert) {
+        heading.textContent = '✓ No conflicts found for ' + drugName + ' with this patient\'s medications.';
+      } else {
+        heading.textContent = '⚠ Conflicts found for ' + drugName + ':';
+        result.conflictingDrugs.forEach(conflict => {
+          const li = document.createElement('li');
+          li.textContent = '[' + conflict.severity.toUpperCase() + '] ' + conflict.drugName + ': ' + conflict.description;
+          list.appendChild(li);
+        });
+      }
+
+      document.getElementById('conflictResult').style.display = 'block';
+    }
+
+    // ── Enter key support ─────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('patientInput')
+        .addEventListener('keydown', e => { if (e.key === 'Enter') searchPatient(); });
+      document.getElementById('drugInput')
+        .addEventListener('keydown', e => { if (e.key === 'Enter') checkDrug(); });
+    });
+
+  </script>
+
+</body>
+</html>
