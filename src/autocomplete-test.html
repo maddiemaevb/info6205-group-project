@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Drug Autocomplete Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    li:hover {
+      background: #f5f5f5;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Drug Autocomplete Test</h1>
+
+  <input type="text" id="drugSearch" placeholder="Search for a drug..." autocomplete="off" />
+  <ul id="suggestions" class="hidden"></ul>
+
+  <script>
+    const input = document.getElementById("drugSearch");
+    const suggestions = document.getElementById("suggestions");
+
+    input.addEventListener("input", async () => {
+      const query = input.value.trim();
+
+      if (query.length === 0) {
+        suggestions.innerHTML = "";
+        suggestions.classList.add("hidden");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/drugs/search?q=${encodeURIComponent(query)}`);
+        const results = await response.json();
+
+        suggestions.innerHTML = "";
+
+        if (!results.length) {
+          suggestions.classList.add("hidden");
+          return;
+        }
+
+        results.forEach(drug => {
+          const li = document.createElement("li");
+          li.textContent = drug;
+          li.addEventListener("click", () => {
+            input.value = drug;
+            suggestions.innerHTML = "";
+            suggestions.classList.add("hidden");
+          });
+          suggestions.appendChild(li);
+        });
+
+        suggestions.classList.remove("hidden");
+      } catch (error) {
+        console.error("Autocomplete error:", error);
+      }
+    });
+  </script>
+</body>
+</html>
