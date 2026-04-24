@@ -19,15 +19,14 @@ public class DrugHashMap {
      buildHashMap(drugs);
  }
  
- // Build the HashMap
+ // Build the HashMap Id is the key and Drug object is the value
  private void buildHashMap(List<Drug> drugs) {
      for (Drug drug : drugs) {
          drugMap.put(drug.getDrugId(), drug);
      }
  }
  
- // ========== PUBLIC API METHODS ==========
- 
+
  /**
   * O(1) lookup by drug ID
   * Business logic: Fast retrieval of drug information

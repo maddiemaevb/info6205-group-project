@@ -91,8 +91,16 @@ public class AutocompleteServer {
             // Get name or ID query parameter (ID is optional, but name is required for lookup)
             String name = getQueryParam(exchange, "name");
             String id   = getQueryParam(exchange, "id");
+            String q = getQueryParam(exchange, "q");
             Patient patient = null;
-            if (name != null && !name.trim().isEmpty()) {
+            if (q != null && !q.trim().isEmpty()) {
+                // Try ID first, then name
+                patient = patientRepo.getPatientById(q);
+                if (patient == null) {
+                    patient = patientRepo.getPatientByName(q);
+                }
+            } 
+            else if (name != null && !name.trim().isEmpty()) {
                 // Look up by name
                 patient = patientRepo.getPatientByName(name);
             } else if (id != null && !id.trim().isEmpty()) {

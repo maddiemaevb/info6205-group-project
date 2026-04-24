@@ -59,7 +59,7 @@ public class Drug {
 		public void setWarnings(List<String> warnings) {
 			this.warnings = warnings;
 		}
-		public void setDrugConflict(List<DrugConflict> drugConflicts) {
+		public void setDrugConflicts(List<DrugConflict> drugConflicts) {
 			this.drugConflicts = drugConflicts;
 		}
 		public void setAllergyConflicts(List<String> allergyConflicts) {

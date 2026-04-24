@@ -15,7 +15,7 @@ public class DrugDataLoader {
 		/* Parse JSON file into Java object */
 		ObjectMapper mapper = new ObjectMapper();
 		
-		/* Object mapper reads jason file and maps it to attribute sif java object */
+		/* Object mapper reads json file and maps it to attributes of java object */
 		DrugDataset dataset = mapper.readValue(new File(filePath), DrugDataset.class);
 		
 		/* Validation for file reference error*/
@@ -28,7 +28,7 @@ public class DrugDataLoader {
 			throw new IOException("Drug data file is empty"+ filePath);
 		}
 		
-		/* Storing the data as unmodifiable list */
+		/* Storing the drug data as unmodifiable list */
 		this.drugs = Collections.unmodifiableList(dataset.getDrugs());
 		
 		System.out.println("DrugDataLoader: loaded " + drugs.size() + " drugs.");

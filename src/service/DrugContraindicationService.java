@@ -21,9 +21,12 @@ public class DrugContraindicationService {
 		public DrugContraindicationService(List<Drug> drugs) {
 			this.graph = new HashMap<>();
 			this.drugsByName = new HashMap<>();
+			// storing drug and its interactions with other drugs in a graph with drugID as key and list of drugs it
+			// interacts negatively with as values
 			for(Drug drug:drugs) {
 				graph.put(drug.getDrugId(), drug.getDrugConflicts());
 			}
+			// storing drugs in a hashmap with drug name as key and drug object as the value
 			for(Drug drug:drugs) {
 				drugsByName.put(drug.getName().toLowerCase(), drug);			
 			}
@@ -64,11 +67,12 @@ public class DrugContraindicationService {
 			if(newDrug == null) {
 				return new PatientContraindicationResult(newDrugName, new ArrayList<>());
 			}
-			// Storing patient's medication in a a hash set for quick retrieval
+			// Using a HashSet for patientDrugIds to allow for O(1) lookups when checking for interactions
 			Set<String> patientDrugSet = new HashSet<>(patientDrugIds);
+			// List to store any conflicting drugs found during the check
 			List<DrugConflict> conflicting = new ArrayList<>();
+			// Retrieve all interactions for the new drug from the graph. If there are no interactions, return an empty result.
 			List<DrugConflict> allInteractions =  graph.get(newDrug.getDrugId());
-			
 			if(allInteractions == null) {
 				return new PatientContraindicationResult(newDrugName, new ArrayList<>());
 			}
