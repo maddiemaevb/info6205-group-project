@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Drug Alert System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      width: 300px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #patientInfo {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    #patientInfo p {
+      margin: 8px 0;
+      line-height: 1.6;
+    }
+
+    .error {
+      color: #d32f2f;
+      margin-top: 10px;
+    }
+
+    /* Autocomplete styling */
+    .autocomplete-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .autocomplete-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 1000;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .autocomplete-suggestions li {
+      padding: 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .autocomplete-suggestions li:last-child {
+      border-bottom: none;
+    }
+
+    .autocomplete-suggestions li:hover {
+      background-color: #f5f5f5;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #conflictResult {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+    }
+
+    #conflictResult.no-conflict {
+      background: #d4edda;
+      border-color: #28a745;
+    }
+
+    #conflictList {
+      margin-top: 10px;
+    }
+
+    #conflictList li {
+      margin: 8px 0;
+      padding: 8px;
+      background: white;
+      border-left: 3px solid #ff9800;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Drug Alert System</h1>
+
+  <!-- Step 1: Patient Search -->
+  <h2>Patient Search</h2>
+  <input type="text" id="patientInput" placeholder="Enter patient name" />
+  <button onclick="searchPatient()">Search</button>
+  <p id="patientError" class="error"></p>
+
+  <!-- Step 2: Patient Info (hidden until patient is found) -->
+  <div id="patientInfo" style="display:none">
+    <h2>Patient Information</h2>
+    <p id="patientName"></p>
+    <p id="patientId"></p>
+    <p id="patientDob"></p>
+    <p id="patientAge"></p>
+    <p id="patientSex"></p>
+    <p id="patientMedications"></p>
+    <p id="patientAllergies"></p>
+    <p id="patientConditions"></p>
+    <p id="patientDietary"></p>
+    <p id="patientNotes"></p>
+
+    <!-- Step 3: Drug Check with Autocomplete (shown once patient is loaded) -->
+    <h2>Check New Drug</h2>
+    <div class="autocomplete-container">
+      <input type="text" id="drugInput" placeholder="Enter drug name" autocomplete="off" />
+      <ul id="drugSuggestions" class="autocomplete-suggestions hidden"></ul>
+    </div>
+    <button onclick="checkDrug()">Check</button>
+    <p id="drugError" class="error"></p>
+
+    <!-- Step 4: Conflict Results -->
+    <div id="conflictResult" style="display:none">
+      <h3 id="conflictHeading"></h3>
+      <ul id="conflictList"></ul>
+    </div>
+  </div>
+
+  <script>
+
+    // Stores the current patient's medication list
+    // Used when checking a new drug for conflicts
+    let currentPatientMeds = [];
+
+    // Search patient by name
+    async function searchPatient() {
+      const query = document.getElementById('patientInput').value.trim();
+
+      document.getElementById('patientError').textContent = '';
+      document.getElementById('patientInfo').style.display = 'none';
+      document.getElementById('conflictResult').style.display = 'none';
+
+      if (!query) {
+        document.getElementById('patientError').textContent = 'Please enter a patient name or patient ID.';
+        return;
+      }
+
+      try {
+        // API call to patient endpoint
+        const res = await fetch(`http://localhost:8080/api/patients?q=${encodeURIComponent(query)}`);
+
+        if (res.status === 404) {
+          document.getElementById('patientError').textContent = 'Patient not found.';
+          return;
+        }
+
+        const patient = await res.json();
+        renderPatient(patient);
+
+      } catch (err) {
+        document.getElementById('patientError').textContent = 'Error connecting to server.';
+      }
+    }
+
+    // Render patient info
+    function renderPatient(p) {
+      document.getElementById('patientName').textContent       = 'Name: ' + p.name;
+      document.getElementById('patientId').textContent         = 'Patient ID: ' + p.patientId;
+      document.getElementById('patientDob').textContent        = 'Date of Birth: ' + p.dateOfBirth;
+      document.getElementById('patientAge').textContent        = 'Age: ' + p.age;
+      document.getElementById('patientSex').textContent        = 'Sex: ' + p.sex;
+      document.getElementById('patientMedications').textContent = 'Medications: ' + (p.medications?.join(', ') || 'None');
+      document.getElementById('patientAllergies').textContent  = 'Allergies: ' + (p.allergies?.join(', ') || 'None');
+      document.getElementById('patientConditions').textContent = 'Conditions: ' + (p.conditions?.join(', ') || 'None');
+      document.getElementById('patientDietary').textContent    = 'Dietary Habits: ' + (p.dietaryHabits?.join(', ') || 'None');
+      document.getElementById('patientNotes').textContent      = 'Clinical Notes: ' + p.clinicalNotes;
+
+      // Store medication list for drug conflict check
+      currentPatientMeds = p.medications || [];
+
+      document.getElementById('patientInfo').style.display = 'block';
+    }
+
+    // Drug Autocomplete Logic
+    const drugInput = document.getElementById("drugInput");
+    const drugSuggestions = document.getElementById("drugSuggestions");
+
+    drugInput.addEventListener("input", async () => {
+      const query = drugInput.value.trim();
+
+      // Clear suggestions if input is empty
+      if (query.length === 0) {
+        drugSuggestions.innerHTML = "";
+        drugSuggestions.classList.add("hidden");
+        return;
+      }
+
+      try {
+        // API call to drug search endpoint
+        const response = await fetch(`http://localhost:8080/api/drugs/search?q=${encodeURIComponent(query)}`);
+        const results = await response.json();
+
+        drugSuggestions.innerHTML = "";
+
+        // Hide suggestions if no results
+        if (!results.length) {
+          drugSuggestions.classList.add("hidden");
+          return;
+        }
+
+        // Populate suggestion list
+        results.forEach(drug => {
+          const li = document.createElement("li");
+          li.textContent = drug;
+          li.addEventListener("click", () => {
+            drugInput.value = drug;
+            drugSuggestions.innerHTML = "";
+            drugSuggestions.classList.add("hidden");
+          });
+          drugSuggestions.appendChild(li);
+        });
+
+        drugSuggestions.classList.remove("hidden");
+      } catch (error) {
+        console.error("Autocomplete error:", error);
+      }
+    });
+
+    // Close suggestions when clicking outside
+    document.addEventListener("click", (e) => {
+      if (e.target !== drugInput) {
+        drugSuggestions.classList.add("hidden");
+      }
+    });
+
+    // Check new drug against patient meds
+    async function checkDrug() {
+      const drug = document.getElementById('drugInput').value.trim();
+
+      document.getElementById('drugError').textContent = '';
+      document.getElementById('conflictResult').style.display = 'none';
+
+      if (!drug) {
+        document.getElementById('drugError').textContent = 'Please enter a drug name.';
+        return;
+      }
+
+      try {
+        // API call to contraindication endpoint
+        // Passes drug name and patient's current medications as comma-separated IDs
+        const medsParam = currentPatientMeds.join(',');
+        const res = await fetch(`http://localhost:8080/api/contraindications?drug=${encodeURIComponent(drug)}&patientMeds=${encodeURIComponent(medsParam)}`);
+        const result = await res.json();
+
+        renderConflicts(drug, result);
+
+      } catch (err) {
+        document.getElementById('drugError').textContent = 'Error connecting to server.';
+      }
+    }
+
+    // Render conflict results
+    function renderConflicts(drugName, result) {
+      const conflictDiv = document.getElementById('conflictResult');
+      const heading = document.getElementById('conflictHeading');
+      const list    = document.getElementById('conflictList');
+
+      list.innerHTML = '';
+
+      if (!result.hasSafetyAlert) {
+        conflictDiv.classList.add('no-conflict');
+        conflictDiv.classList.remove('conflict');
+        heading.textContent = '✓ No conflicts found for ' + drugName + ' with this patient\'s medications.';
+      } else {
+        conflictDiv.classList.remove('no-conflict');
+        conflictDiv.classList.add('conflict');
+        heading.textContent = '⚠ Conflicts found for ' + drugName + ':';
+        result.conflictingDrugs.forEach(conflict => {
+          const li = document.createElement('li');
+          li.textContent = '[' + conflict.severity.toUpperCase() + '] ' + conflict.drugName + ': ' + conflict.description;
+          list.appendChild(li);
+        });
+      }
+
+      conflictDiv.style.display = 'block';
+    }
+
+    // Enter key support
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('patientInput')
+        .addEventListener('keydown', e => { if (e.key === 'Enter') searchPatient(); });
+      document.getElementById('drugInput')
+        .addEventListener('keydown', e => { if (e.key === 'Enter') checkDrug(); });
+    });
+
+  </script>
+
+</body>
+</html>

@@ -28,7 +28,7 @@ public class TestServices {
 			 List<String> patientMeds = List.of("D002", "D006");
 			 PatientContraindicationResult patientResult = service.checkAgainstPatient("warfarin", patientMeds);
 
-			 System.out.println("Safety Alert: " + patientResult.hasSafetyAlert());
+			 System.out.println("Safety Alert: " + patientResult.getHasSafetyAlert());
 			 System.out.println("Conflicting drugs: " + patientResult.getConflictingDrugs().size());
 			 for(DrugConflict d : patientResult.getConflictingDrugs()) {
 			     System.out.println("  [" + d.getSeverity() + "] " + d.getDrugName() + ": " + d.getDescription());

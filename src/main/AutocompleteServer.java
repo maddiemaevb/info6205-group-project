@@ -6,6 +6,11 @@ import com.sun.net.httpserver.HttpServer;
 import model.DrugDataLoader;
 import model.DrugRepo;
 import model.DrugTrie;
+import model.Patient;
+import model.PatientContraindicationResult;
+import model.PatientDataLoader;
+import model.PatientRepo;
+import service.DrugContraindicationService;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,8 +33,9 @@ public class AutocompleteServer {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);        
+        
+        /* ======== Drug Autocomplete API Endpoint ======== */
         server.createContext("/api/drugs/search", exchange -> {
             addCorsHeaders(exchange);
 
@@ -57,6 +63,96 @@ public class AutocompleteServer {
             }
 
             String json = mapper.writeValueAsString(results);
+            sendJson(exchange, 200, json);
+        });
+        
+        
+        /* ======== Patient API Endpoint ======== */
+     // Load patient data from JSON and populate patient repository
+        PatientDataLoader patientLoader = new PatientDataLoader("resources/patientData.json");
+        PatientRepo patientRepo = new PatientRepo();
+        patientRepo.loadPatients(patientLoader.getPatients());
+        // Initialise contraindication service with drug data (Used to check new drug against patient's existing medications)
+        DrugContraindicationService contraindicationService = 
+                new DrugContraindicationService(drugLoader.getDrugs());
+        
+        server.createContext("/api/patients", exchange -> {
+            addCorsHeaders(exchange);
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(204, -1);
+                exchange.close();
+                return;
+            }
+            // Only GET requests allowed
+            if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendJson(exchange, 405, "{\"error\":\"Method not allowed\"}");
+                return;
+            }
+            // Get name or ID query parameter (ID is optional, but name is required for lookup)
+            String name = getQueryParam(exchange, "name");
+            String id   = getQueryParam(exchange, "id");
+            String q = getQueryParam(exchange, "q");
+            Patient patient = null;
+            if (q != null && !q.trim().isEmpty()) {
+                // Try ID first, then name
+                patient = patientRepo.getPatientById(q);
+                if (patient == null) {
+                    patient = patientRepo.getPatientByName(q);
+                }
+            } 
+            else if (name != null && !name.trim().isEmpty()) {
+                // Look up by name
+                patient = patientRepo.getPatientByName(name);
+            } else if (id != null && !id.trim().isEmpty()) {
+                // Look up by ID
+                patient = patientRepo.getPatientById(id);
+            } else {
+                sendJson(exchange, 400, "{\"error\":\"Provide either name or id parameter\"}");
+                return;
+            }
+			if (patient == null) {
+				sendJson(exchange, 404, "{\"error\":\"Patient not found\"}");
+				return;
+			}
+			
+         // Convert patient object to JSON and send response
+            String json = mapper.writeValueAsString(patient);
+            sendJson(exchange, 200, json);
+        });
+        
+        
+        /* ======== Drug Contraindication Check API Endpoint ======== */
+        server.createContext("/api/contraindications", exchange -> {
+            addCorsHeaders(exchange);
+            
+            if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(204, -1);
+                exchange.close();
+                return;
+            }
+            
+            if(!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                sendJson(exchange, 405, "{\"error\":\"Method not allowed\"}");
+                return;
+            }
+            
+            // Get the drug name being prescribed
+            String drugName = getQueryParam(exchange, "drug");
+            // Get patients's curent medications as comma-separated string
+            String patientMedsParam = getQueryParam(exchange, "patientMeds");
+            if (drugName == null || drugName.trim().isEmpty()) {
+                sendJson(exchange, 400, "{\"error\":\"Missing 'drug' parameter\"}");
+                return;
+            }
+            // Convert comma-separated string to List<String>
+            List<String> patientMeds = patientMedsParam == null || patientMedsParam.trim().isEmpty()
+                    ? Collections.emptyList()
+                    : List.of(patientMedsParam.split(","));
+            // Check new drug against patient's medications
+            PatientContraindicationResult result =
+                    contraindicationService.checkAgainstPatient(drugName, patientMeds);
+            
+            String json = mapper.writeValueAsString(result);
             sendJson(exchange, 200, json);
         });
 
