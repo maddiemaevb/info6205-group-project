@@ -20,6 +20,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * java http server used to connect the frontend to the backend of our project
+ * 
+ * this server exposes the api endpoints for drug autocomplete, including patient lookup,
+ * and checking for contraindication.
+ * @param args
+ * @throws Exception
+ */
 public class AutocompleteServer {
 
     public static void main(String[] args) throws Exception {
@@ -67,7 +75,6 @@ public class AutocompleteServer {
         });
         
         
-        /* ======== Patient API Endpoint ======== */
      // Load patient data from JSON and populate patient repository
         PatientDataLoader patientLoader = new PatientDataLoader("resources/patientData.json");
         PatientRepo patientRepo = new PatientRepo();
@@ -83,28 +90,28 @@ public class AutocompleteServer {
                 exchange.close();
                 return;
             }
-            // Only GET requests allowed
+            //only GET requests allowed
             if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
                 sendJson(exchange, 405, "{\"error\":\"Method not allowed\"}");
                 return;
             }
-            // Get name or ID query parameter (ID is optional, but name is required for lookup)
+            //get name or ID query parameter (ID is optional, but name is required for lookup)
             String name = getQueryParam(exchange, "name");
             String id   = getQueryParam(exchange, "id");
             String q = getQueryParam(exchange, "q");
             Patient patient = null;
             if (q != null && !q.trim().isEmpty()) {
-                // Try ID first, then name
+                //try ID first, then name
                 patient = patientRepo.getPatientById(q);
                 if (patient == null) {
                     patient = patientRepo.getPatientByName(q);
                 }
             } 
             else if (name != null && !name.trim().isEmpty()) {
-                // Look up by name
+                //look up by name
                 patient = patientRepo.getPatientByName(name);
             } else if (id != null && !id.trim().isEmpty()) {
-                // Look up by ID
+                //look up by ID
                 patient = patientRepo.getPatientById(id);
             } else {
                 sendJson(exchange, 400, "{\"error\":\"Provide either name or id parameter\"}");
@@ -115,13 +122,11 @@ public class AutocompleteServer {
 				return;
 			}
 			
-         // Convert patient object to JSON and send response
+         //convert patient object to JSON and send response
             String json = mapper.writeValueAsString(patient);
             sendJson(exchange, 200, json);
         });
         
-        
-        /* ======== Drug Contraindication Check API Endpoint ======== */
         server.createContext("/api/contraindications", exchange -> {
             addCorsHeaders(exchange);
             
@@ -136,19 +141,19 @@ public class AutocompleteServer {
                 return;
             }
             
-            // Get the drug name being prescribed
+            //get the drug name being prescribed
             String drugName = getQueryParam(exchange, "drug");
-            // Get patients's curent medications as comma-separated string
+            //get patients's curent medications as comma-separated string
             String patientMedsParam = getQueryParam(exchange, "patientMeds");
             if (drugName == null || drugName.trim().isEmpty()) {
                 sendJson(exchange, 400, "{\"error\":\"Missing 'drug' parameter\"}");
                 return;
             }
-            // Convert comma-separated string to List<String>
+            //convert comma-separated string to List<String>
             List<String> patientMeds = patientMedsParam == null || patientMedsParam.trim().isEmpty()
                     ? Collections.emptyList()
                     : List.of(patientMedsParam.split(","));
-            // Check new drug against patient's medications
+            //check new drug against patient's medications
             PatientContraindicationResult result =
                     contraindicationService.checkAgainstPatient(drugName, patientMeds);
             

@@ -13,6 +13,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ArrayList;
 
+/**
+ * this is a service class responsible for checking drug contraindications
+ * 
+ * this class stores drug interaction relationships in basically a graph like hashmap
+ * where each drug id maps to a list of drug conflict objects
+ * 
+ * it also stores drugs by name for the fast lookup and will check whether a new drug
+ * conflicts with a patients current medications
+ */
 public class DrugContraindicationService {
 		
 		private final Map<String, List<DrugConflict>> graph;

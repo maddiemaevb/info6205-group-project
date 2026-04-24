@@ -5,6 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * this is a repository class for storing and getting the patient records
+ * 
+ * this class uses hashmaps to support fast lookup by patient id and the patient name.
+ * 
+ * it is used by the backend server when the frontend requests patient info
+ */
 public class PatientRepo {
 
     private Map<String, Patient> patientsById;

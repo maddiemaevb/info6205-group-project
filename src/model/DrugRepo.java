@@ -2,8 +2,16 @@ package model;
 
 import java.util.*;
 
+/**
+ * this repository class is for storing and retrieving drug objects
+ * 
+ * uses hashmaps to provide fast lookup of medications by their drug id,
+ * generic name, and the brand name.
+ * 
+ * this class is used by the autocomplete trie and the backend services to quickly get
+ * drug records without going through the whole dataset.
+ */
 public class DrugRepo {
-
     private Map<String, Drug> drugsById;
     private Map<String, Drug> drugsByName;
 
@@ -13,7 +21,11 @@ public class DrugRepo {
     }
 
     /**
-     * Load drugs into the repository
+     * loads a list of drug objects into the repo
+     * 
+     * the drugs are stored in two hashmaps as one is keyed by the drug id
+     * and one is for the drug name or the brand name. so you can lookup either by name or id
+     * @param drugs list of drug objects loaded from the json file
      */
     public void loadDrugs(List<Drug> drugs) {
         for (Drug drug : drugs) {
@@ -36,7 +48,9 @@ public class DrugRepo {
     }
 
     /**
-     * Get a drug by name
+     * this retieves a drug by generic name or brand name
+     * @param name generic name of the drug
+     * @return returns the matching drug object or null if not found
      */
     public Drug getDrugByName(String name) {
         if (name == null) return null;
@@ -49,27 +63,36 @@ public class DrugRepo {
     }
 
     /**
-     * Check if drug exists
+     * checks to see if the drug exists by the generic name
+     * @param name name of the drug
+     * @return returns true if the drug exists or false if not
      */
     public boolean containsDrug(String name) {
         if (name == null) return false;
         return drugsByName.containsKey(name.toLowerCase());
     }
 
+    /**
+     * checks to see if the drug exists by the id
+     * @param drugId the id of the drug
+     * @return returns true if the drug exists or false if not
+     */
     public boolean containsDrugId(String drugId){
         if (drugId == null) return false;
         return drugsById.containsKey(drugId);
     }
 
     /**
-     * Get all drugs (used for Trie loading, etc.)
+     * gets all of the drugs
+     * @return returns all of the drugs
      */
     public Collection<Drug> getAllDrugs() {
         return drugsById.values();
     }
 
     /**
-     * Optional: get size (useful for debugging)
+     * gets the size - but is mainly for debugging
+     * @return returns the size by drug id
      */
     public int size() {
         return drugsById.size();
